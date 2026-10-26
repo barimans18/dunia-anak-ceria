@@ -237,7 +237,7 @@ class AppData {
     ),
   ];
 
-  // 12 Kendaraan Hebat
+  // 13 Kendaraan Hebat
   static const List<EduItem> vehicles = [
     EduItem(
       id: 'car',
@@ -249,6 +249,17 @@ class AppData {
       primaryColor: Color(0xFF38BDF8),
       borderColor: Color(0xFF0284C7),
       soundAsset: 'audio/vehicles/car.wav',
+    ),
+    EduItem(
+      id: 'motorcycle',
+      name: 'Motor',
+      soundText: 'Ngeeeng-ngeeeng!',
+      emoji: '🏍️',
+      syllables: ['Mo', 'tor'],
+      description: 'Sepeda motor beroda dua yang lincah melaju di jalan raya.',
+      primaryColor: Color(0xFF0EA5E9),
+      borderColor: Color(0xFF0284C7),
+      soundAsset: 'audio/vehicles/motorcycle.wav',
     ),
     EduItem(
       id: 'fire',

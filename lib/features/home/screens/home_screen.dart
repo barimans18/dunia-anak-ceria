@@ -400,7 +400,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   _buildHubCategoryCard(
                     title: 'Kendaraan',
-                    subtitle: '12 Alat Transportasi',
+                    subtitle: '13 Alat Transportasi',
                     badge: 'Buka 🚦',
                     emoji: '🚗',
                     svgAsset: 'assets/icons/vehicles.svg',
