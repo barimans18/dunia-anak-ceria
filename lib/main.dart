@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/services/sound_engine.dart';
+import 'core/services/user_profile_service.dart';
 import 'core/theme/app_theme.dart';
 import 'features/home/screens/home_screen.dart';
 
@@ -18,8 +19,9 @@ void main() async {
     ),
   );
 
-  // Initialize Sound and Phonics TTS engine
+  // Initialize Sound, Phonics TTS engine & User Profile
   await SoundEngine().init();
+  await UserProfileService().loadProfile();
 
   runApp(
     const ProviderScope(

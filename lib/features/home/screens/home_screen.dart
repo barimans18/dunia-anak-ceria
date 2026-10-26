@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/services/sound_engine.dart';
+import '../../../core/services/user_profile_service.dart';
 import '../../../shared/widgets/bouncy_card.dart';
 import '../../../shared/widgets/top_kiosk_bar.dart';
 import '../../animals/screens/animals_screen.dart';
@@ -11,6 +12,7 @@ import '../../numbers/screens/numbers_screen.dart';
 import '../../reading/screens/reading_screen.dart';
 import '../../vehicles/screens/vehicles_screen.dart';
 import '../../voice_mimic/screens/voice_mimic_screen.dart';
+import '../widgets/user_profile_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,6 +23,22 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String currentView = 'home'; // 'home', 'learn_hub', 'animals', 'vehicles', 'fruits', 'reading', 'numbers', 'video', 'mimic'
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkFirstTimeProfilePopup();
+    });
+  }
+
+  void _checkFirstTimeProfilePopup() {
+    final profile = UserProfileService();
+    // Jika belum ke-set dua-duanya (nama & foto), munculkan popup
+    if (!profile.isProfileComplete && mounted) {
+      UserProfileDialog.show(context);
+    }
+  }
 
   void _switchView(String view) {
     SoundEngine().playClick();
