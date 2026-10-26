@@ -54,11 +54,11 @@ class TopKioskBar extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10),
-            Expanded(
+            const Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
-                children: const [
+                children: [
                   Text(
                     'DUNIA CERIA',
                     style: TextStyle(
@@ -83,15 +83,16 @@ class TopKioskBar extends StatelessWidget {
             BouncyCard(
               onTap: () => ParentalGateDialog.show(context),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
                 decoration: BoxDecoration(
                   color: const Color(0xFFFEF3C7),
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.sunnyYellow, width: 1.5),
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: const [
+                  children: [
                     Text('🛡️', style: TextStyle(fontSize: 14)),
                     SizedBox(width: 4),
                     Text(
