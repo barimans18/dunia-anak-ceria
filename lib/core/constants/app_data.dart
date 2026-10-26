@@ -488,8 +488,8 @@ class AppData {
   static const List<BasicWordItem> basicWords = [
     BasicWordItem(word: 'BOLA', syllables: ['Bo', 'la'], emoji: '⚽', color: Color(0xFF38BDF8)),
     BasicWordItem(word: 'BUKU', syllables: ['Bu', 'ku'], emoji: '📚', color: Color(0xFF10B981)),
-    BasicWordItem(word: 'MAMA', syllables: ['Ma', 'ma'], emoji: '👩', color: Color(0xFFEC4899)),
-    BasicWordItem(word: 'PAPA', syllables: ['Pa', 'pa'], emoji: '👨', color: Color(0xFF6366F1)),
+    BasicWordItem(word: 'IBU', syllables: ['I', 'bu'], emoji: '👩', color: Color(0xFFEC4899)),
+    BasicWordItem(word: 'BABA', syllables: ['Ba', 'ba'], emoji: '👨', color: Color(0xFF6366F1)),
     BasicWordItem(word: 'SUSU', syllables: ['Su', 'su'], emoji: '🥛', color: Color(0xFFF59E0B)),
     BasicWordItem(word: 'ROTI', syllables: ['Ro', 'ti'], emoji: '🍞', color: Color(0xFFF97316)),
     BasicWordItem(word: 'TOPI', syllables: ['To', 'pi'], emoji: '🧢', color: Color(0xFF14B8A6)),
