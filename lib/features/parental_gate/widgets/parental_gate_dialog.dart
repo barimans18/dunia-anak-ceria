@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/services/kiosk_service.dart';
 import '../../../core/services/sound_engine.dart';
 
 class ParentalGateDialog extends StatefulWidget {
@@ -28,14 +29,22 @@ class _ParentalGateDialogState extends State<ParentalGateDialog> {
   bool hasError = false;
   bool isUnlocked = false;
 
-  // Settings mock state
+  // Settings state
   int screenTimeMinutes = 30;
-  bool isKioskLocked = true;
+  bool isKioskLocked = false;
 
   @override
   void initState() {
     super.initState();
     _generateMath();
+    _checkKioskStatus();
+  }
+
+  Future<void> _checkKioskStatus() async {
+    final active = await KioskService().isKioskActive();
+    if (mounted) {
+      setState(() => isKioskLocked = active);
+    }
   }
 
   void _generateMath() {
@@ -237,14 +246,38 @@ class _ParentalGateDialogState extends State<ParentalGateDialog> {
         ),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          secondary: const Icon(Icons.shield_outlined, color: AppColors.emeraldGreen),
-          title: const Text('Kunci Kiosk Home', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          subtitle: const Text('Cegah anak keluar aplikasi', style: TextStyle(fontSize: 11)),
+          secondary: const Icon(Icons.screen_lock_portrait_rounded, color: AppColors.emeraldGreen),
+          title: const Text('Kunci Layar Kiosk (Pinning)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          subtitle: const Text('Kunci layar HP agar anak tidak bisa membuka WA atau aplikasi lain', style: TextStyle(fontSize: 11)),
           value: isKioskLocked,
           activeThumbColor: AppColors.emeraldGreen,
-          onChanged: (val) => setState(() => isKioskLocked = val),
+          onChanged: (val) async {
+            setState(() => isKioskLocked = val);
+            if (val) {
+              await KioskService().startKiosk();
+            } else {
+              await KioskService().stopKiosk();
+            }
+          },
         ),
-        const SizedBox(height: 16),
+        ListTile(
+          contentPadding: EdgeInsets.zero,
+          leading: const Icon(Icons.home_outlined, color: AppColors.primarySky),
+          title: const Text('Jadikan Launcher Utama HP', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          subtitle: const Text('Buka menu pengaturan Aplikasi Layar Utama Android', style: TextStyle(fontSize: 11)),
+          trailing: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFE0F2FE),
+              foregroundColor: const Color(0xFF0284C7),
+              elevation: 0,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+            onPressed: () => KioskService().openHomeSettings(),
+            child: const Text('Atur ⚙️', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+          ),
+        ),
+        const SizedBox(height: 12),
         ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.red.shade50,
@@ -255,9 +288,12 @@ class _ParentalGateDialogState extends State<ParentalGateDialog> {
           ),
           icon: const Icon(Icons.exit_to_app, size: 18),
           label: const Text('Keluar ke Launcher Sistem', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-          onPressed: () {
-            Navigator.pop(context);
-            SystemNavigator.pop();
+          onPressed: () async {
+            await KioskService().stopKiosk();
+            if (context.mounted) {
+              Navigator.pop(context);
+              SystemNavigator.pop();
+            }
           },
         ),
         const SizedBox(height: 12),
