@@ -1,0 +1,2411 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Dunia Anak Ceria - Kids Launcher</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Fredoka & Nunito for friendly kid-style typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+    body {
+      font-family: 'Fredoka', cursive, sans-serif;
+      background: linear-gradient(180deg, #60A5FA 0%, #93C5FD 50%, #86EFAC 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .font-num {
+      font-family: 'Nunito', sans-serif;
+    }
+    /* Floating Cloud Animations */
+    @keyframes floatSlow {
+      0% { transform: translateX(-120%); }
+      100% { transform: translateX(120vw); }
+    }
+    .cloud-anim-1 { animation: floatSlow 28s linear infinite; }
+    .cloud-anim-2 { animation: floatSlow 38s linear infinite 14s; }
+    
+    /* Wobble & Bounce effects */
+    @keyframes gentleBounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-8px) scale(1.02); }
+    }
+    .bounce-card {
+      animation: gentleBounce 3.5s ease-in-out infinite;
+    }
+    .active-press:active {
+      transform: scale(0.92) translateY(4px);
+      filter: brightness(0.95);
+    }
+    /* Pulse for recording */
+    @keyframes pulseRecord {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { transform: scale(1.08); box-shadow: 0 0 0 18px rgba(239, 68, 68, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+    .recording-pulse {
+      animation: pulseRecord 1.4s infinite;
+    }
+    /* Ripple & pulse for stage card */
+    @keyframes stageGlow {
+      0%, 100% { box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.2), 0 8px 10px -6px rgba(59, 130, 246, 0.2); }
+      50% { box-shadow: 0 20px 35px -5px rgba(245, 158, 11, 0.35), 0 12px 16px -6px rgba(245, 158, 11, 0.3); }
+    }
+    .stage-card-glow {
+      animation: stageGlow 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="flex justify-center items-center min-h-screen p-0 sm:p-4 text-slate-800">
+
+  <!-- Mobile Device Frame Container -->
+  <div class="relative w-full max-w-md h-[100dvh] sm:h-[860px] bg-sky-200 sm:rounded-[40px] shadow-2xl flex flex-col overflow-hidden border-0 sm:border-8 border-yellow-400">
+    
+    <!-- Background Animated Clouds -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-40">
+      <div class="absolute top-8 cloud-anim-1">
+        <svg class="w-24 h-12 text-white fill-current" viewBox="0 0 100 50">
+          <path d="M20 40 Q20 20 40 20 Q50 5 70 20 Q90 20 90 40 Z"/>
+        </svg>
+      </div>
+      <div class="absolute top-28 cloud-anim-2">
+        <svg class="w-32 h-16 text-white fill-current" viewBox="0 0 100 50">
+          <path d="M20 40 Q20 15 45 18 Q60 2 80 18 Q95 20 95 40 Z"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Top Safe Area / Kiosk Status Bar -->
+    <header class="relative z-20 flex items-center justify-between px-4 pt-3 pb-2 bg-white/70 backdrop-blur-md rounded-b-3xl shadow-sm border-b-2 border-yellow-300">
+      <div class="flex items-center space-x-2">
+        <div class="w-10 h-10 rounded-full bg-amber-400 border-2 border-white flex items-center justify-center text-xl shadow">
+          ⭐
+        </div>
+        <div>
+          <span class="text-xs font-bold text-sky-800 tracking-wide uppercase">Dunia Ceria</span>
+          <h1 class="text-lg font-black text-amber-500 leading-tight">Halo, Bintang Kecil!</h1>
+        </div>
+      </div>
+
+      <!-- Parental Control / Exit Kiosk Button -->
+      <button onclick="openParentalLock()" class="px-3 py-1.5 rounded-2xl bg-amber-100 hover:bg-amber-200 border-2 border-amber-400 active-press flex items-center space-x-1 text-amber-800 font-bold text-xs shadow-sm" title="Zona Orang Tua">
+        <span>🛡️</span>
+        <span class="hidden xs:inline">Orang Tua</span>
+      </button>
+    </header>
+
+    <!-- MAIN SCENE SWITCHER (App Views) -->
+    <main id="appContent" class="relative z-10 flex-1 overflow-y-auto px-4 py-3 flex flex-col">
+      <!-- Views will be dynamically swapped here -->
+    </main>
+
+    <!-- Bottom Friendly Navigation Bar (Compact & Ergonomic 4 Buttons) -->
+    <nav class="relative z-20 px-4 py-2 bg-white/95 rounded-t-3xl shadow-lg border-t-4 border-amber-300 flex justify-between items-center">
+      <button onclick="switchView('home')" id="nav-home" class="nav-item flex flex-col items-center flex-1 py-1 px-2 rounded-2xl transition active-press text-amber-500">
+        <span class="text-2xl">🏠</span>
+        <span class="text-[11px] font-black mt-0.5">Beranda</span>
+      </button>
+
+      <button onclick="switchView('learn_hub')" id="nav-learn_hub" class="nav-item flex flex-col items-center flex-1 py-1 px-2 rounded-2xl transition active-press text-slate-500">
+        <span class="text-2xl">🎒</span>
+        <span class="text-[11px] font-black mt-0.5">Belajar</span>
+      </button>
+
+      <button onclick="switchView('video')" id="nav-video" class="nav-item flex flex-col items-center flex-1 py-1 px-2 rounded-2xl transition active-press text-slate-500">
+        <span class="text-2xl">🎬</span>
+        <span class="text-[11px] font-black mt-0.5">Kartun</span>
+      </button>
+
+      <button onclick="switchView('mimic')" id="nav-mimic" class="nav-item flex flex-col items-center flex-1 py-1 px-2 rounded-2xl transition active-press text-slate-500">
+        <span class="text-2xl">🎙️</span>
+        <span class="text-[11px] font-black mt-0.5">Suaraku</span>
+      </button>
+    </nav>
+
+    <!-- Parental Gate Modal -->
+    <div id="parentalModal" class="hidden absolute inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+      <div class="bg-white rounded-3xl p-6 w-full max-w-xs shadow-2xl border-4 border-amber-400 text-center relative">
+        <div class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl border-2 border-amber-300">
+          🔒
+        </div>
+        <h3 class="text-xl font-bold text-slate-800 mb-1">Zona Orang Tua</h3>
+        <p class="text-xs text-slate-600 mb-4" id="parentalMathQuestion">Selesaikan perhitungan berikut untuk membuka pengaturan:</p>
+        
+        <div class="bg-amber-50 py-3 rounded-2xl text-2xl font-black text-amber-600 mb-4 tracking-wider" id="mathDisplay">
+          3 + 5 = ?
+        </div>
+
+        <input type="number" id="parentalInput" placeholder="Jawaban..." class="w-full text-center text-xl font-bold p-3 border-2 border-slate-300 rounded-2xl focus:border-amber-500 focus:outline-none mb-4">
+
+        <div class="flex space-x-2">
+          <button onclick="closeParentalLock()" class="flex-1 py-2.5 rounded-2xl bg-slate-200 text-slate-700 font-bold active-press">Batal</button>
+          <button onclick="verifyParentalLock()" class="flex-1 py-2.5 rounded-2xl bg-amber-500 text-white font-bold active-press shadow-md hover:bg-amber-600">Buka</button>
+        </div>
+        <p id="parentalError" class="text-xs text-red-500 font-bold mt-2 hidden">Jawaban belum tepat, yuk coba lagi!</p>
+      </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="hidden absolute top-16 left-1/2 -translate-x-1/2 z-50 px-4 py-2 bg-emerald-500 text-white font-black text-sm rounded-full shadow-lg border-2 border-white transition-all duration-300">
+      Bagus Sekali! ⭐
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================================
+       1. OFFLINE-FIRST SOUND ENGINE (Web Audio API Synthesizer)
+       Tidak membutuhkan download file MP3 eksternal, 100% aman offline!
+       ========================================================================= */
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new AudioContextClass();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    // Nada Riang & Feedback Tombol
+    function playTone(freq = 440, type = 'sine', duration = 0.2, volume = 0.25) {
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(volume, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch (e) {
+        console.warn('Audio error:', e);
+      }
+    }
+
+    // Melodi Kemenangan Bintang
+    function playRewardJingle() {
+      const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+      notes.forEach((f, index) => {
+        setTimeout(() => playTone(f, 'triangle', 0.28, 0.3), index * 110);
+      });
+      showToast("Hebat Banget! 🌟");
+    }
+
+    // Suara Hewan Berbasis Sintesis Web Audio
+    function playAnimalSound(type) {
+      const ctx = getAudioContext();
+      const now = ctx.currentTime;
+
+      // Realistic synthesizer using formant filters, noise buffers & multi-oscillator layers
+      if (type === 'cat') {
+        // Kucing: Meong dengan dua harmonik vokal (F1/F2) dan modulasi amplitudo halus
+        const osc1 = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const filter = ctx.createBiquadFilter();
+
+        osc1.type = 'sawtooth';
+        osc2.type = 'triangle';
+        osc1.frequency.setValueAtTime(450, now);
+        osc2.frequency.setValueAtTime(900, now);
+
+        // Infleksi vokal "Meee-oow" (naik lalu turun)
+        osc1.frequency.linearRampToValueAtTime(720, now + 0.3);
+        osc1.frequency.exponentialRampToValueAtTime(320, now + 0.95);
+        osc2.frequency.linearRampToValueAtTime(1440, now + 0.3);
+        osc2.frequency.exponentialRampToValueAtTime(640, now + 0.95);
+
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1100, now);
+        filter.frequency.linearRampToValueAtTime(1800, now + 0.3);
+        filter.frequency.linearRampToValueAtTime(700, now + 0.95);
+        filter.Q.value = 3.5;
+
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.35, now + 0.18);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.95);
+
+        osc1.connect(filter);
+        osc2.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc1.start(now);
+        osc2.start(now);
+        osc1.stop(now + 0.96);
+        osc2.stop(now + 0.96);
+
+      } else if (type === 'dog') {
+        // Anjing: Salakan berenergi dengan noise serak & hentakan dada
+        [0, 0.24].forEach((offset) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          const filter = ctx.createBiquadFilter();
+
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(340, now + offset);
+          osc.frequency.exponentialRampToValueAtTime(80, now + offset + 0.17);
+
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(850, now + offset);
+          filter.frequency.exponentialRampToValueAtTime(250, now + offset + 0.17);
+
+          gain.gain.setValueAtTime(0.45, now + offset);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.17);
+
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc.start(now + offset);
+          osc.stop(now + offset + 0.18);
+        });
+
+      } else if (type === 'cow') {
+        // Sapi: Lenguhan dalam (Moo) dengan vibrato laring
+        const osc = ctx.createOscillator();
+        const lfo = ctx.createOscillator();
+        const lfoGain = ctx.createGain();
+        const filter = ctx.createBiquadFilter();
+        const gain = ctx.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(130, now);
+        osc.frequency.linearRampToValueAtTime(145, now + 0.35);
+        osc.frequency.exponentialRampToValueAtTime(90, now + 1.4);
+
+        lfo.frequency.setValueAtTime(4.5, now);
+        lfoGain.gain.setValueAtTime(6, now);
+        lfo.connect(osc.frequency);
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(420, now);
+        filter.frequency.linearRampToValueAtTime(650, now + 0.3);
+        filter.frequency.linearRampToValueAtTime(300, now + 1.4);
+
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.4, now + 0.25);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 1.4);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
+        lfo.start(now);
+        osc.start(now);
+        lfo.stop(now + 1.42);
+        osc.stop(now + 1.42);
+
+      } else if (type === 'sheep') {
+        // Domba: Embikan dengan getaran bibir cepat (15Hz vibrato)
+        const osc = ctx.createOscillator();
+        const lfo = ctx.createOscillator();
+        const lfoGain = ctx.createGain();
+        const filter = ctx.createBiquadFilter();
+        const gain = ctx.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(290, now);
+        osc.frequency.linearRampToValueAtTime(260, now + 0.85);
+
+        lfo.frequency.setValueAtTime(15, now);
+        lfoGain.gain.setValueAtTime(28, now);
+        lfo.connect(osc.frequency);
+
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(950, now);
+        filter.Q.value = 2.2;
+
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.35, now + 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.85);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
+        lfo.start(now);
+        osc.start(now);
+        lfo.stop(now + 0.86);
+        osc.stop(now + 0.86);
+
+      } else if (type === 'frog') {
+        // Katak: Kwek serak tenggorokan dua ketukan
+        [0, 0.22].forEach(offset => {
+          const osc = ctx.createOscillator();
+          const filter = ctx.createBiquadFilter();
+          const gain = ctx.createGain();
+
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(160, now + offset);
+          osc.frequency.linearRampToValueAtTime(240, now + offset + 0.08);
+
+          filter.type = 'bandpass';
+          filter.frequency.setValueAtTime(620, now + offset);
+          filter.Q.value = 4.0;
+
+          gain.gain.setValueAtTime(0.4, now + offset);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.15);
+
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc.start(now + offset);
+          osc.stop(now + offset + 0.16);
+        });
+
+      } else if (type === 'rooster') {
+        // Ayam: Ku-ku-ru-yuuuk nada berundak naik
+        const pitches = [390, 480, 580, 720];
+        const times = [0, 0.11, 0.24, 0.42];
+        const osc = ctx.createOscillator();
+        const filter = ctx.createBiquadFilter();
+        const gain = ctx.createGain();
+
+        osc.type = 'sawtooth';
+        pitches.forEach((p, idx) => {
+          osc.frequency.setValueAtTime(p, now + times[idx]);
+        });
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1300, now);
+        filter.Q.value = 2.8;
+
+        gain.gain.setValueAtTime(0.38, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 1.05);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 1.06);
+
+      } else if (type === 'elephant') {
+        // Gajah: Tiupan belalai resonan dengan filter sweep
+        const osc = ctx.createOscillator();
+        const filter = ctx.createBiquadFilter();
+        const gain = ctx.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(420, now);
+        osc.frequency.exponentialRampToValueAtTime(840, now + 0.35);
+        osc.frequency.exponentialRampToValueAtTime(310, now + 0.95);
+
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(900, now);
+        filter.frequency.linearRampToValueAtTime(1700, now + 0.35);
+        filter.frequency.linearRampToValueAtTime(650, now + 0.95);
+        filter.Q.value = 5.0;
+
+        gain.gain.setValueAtTime(0.38, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.95);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.96);
+
+      } else if (type === 'monkey') {
+        // Monyet: Pekikan U-U-A-A melompat-lompat
+        [0, 0.16, 0.34].forEach((offset, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(idx === 0 ? 520 : (idx === 1 ? 780 : 920), now + offset);
+          gain.gain.setValueAtTime(0.35, now + offset);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.13);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + offset);
+          osc.stop(now + offset + 0.14);
+        });
+
+      } else if (type === 'duck') {
+        // Bebek: Kwek sengau tajam
+        [0, 0.23].forEach((offset) => {
+          const osc = ctx.createOscillator();
+          const filter = ctx.createBiquadFilter();
+          const gain = ctx.createGain();
+
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(390, now + offset);
+          osc.frequency.linearRampToValueAtTime(260, now + offset + 0.17);
+
+          filter.type = 'bandpass';
+          filter.frequency.setValueAtTime(1150, now + offset);
+          filter.Q.value = 4.2;
+
+          gain.gain.setValueAtTime(0.35, now + offset);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.17);
+
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc.start(now + offset);
+          osc.stop(now + offset + 0.18);
+        });
+
+      } else if (type === 'lion' || type === 'tiger') {
+        // Singa / Harimau: Raungan berat dengan sub-bass dan white noise serak
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const filter = ctx.createBiquadFilter();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(120, now);
+        osc.frequency.linearRampToValueAtTime(65, now + 1.1);
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(360, now);
+
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.5, now + 0.2);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 1.1);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 1.15);
+
+      } else if (type === 'horse') {
+        // Kuda: Ringkikan tinggi bergetar (Whinny)
+        const osc = ctx.createOscillator();
+        const lfo = ctx.createOscillator();
+        const lfoGain = ctx.createGain();
+        const gain = ctx.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(650, now);
+        osc.frequency.linearRampToValueAtTime(1050, now + 0.25);
+        osc.frequency.linearRampToValueAtTime(520, now + 0.9);
+
+        lfo.frequency.setValueAtTime(16, now);
+        lfoGain.gain.setValueAtTime(35, now);
+        lfo.connect(osc.frequency);
+
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.38, now + 0.15);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.9);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        lfo.start(now);
+        osc.start(now);
+        lfo.stop(now + 0.92);
+        osc.stop(now + 0.92);
+
+      } else if (type === 'bee') {
+        // Lebah: Dengungan sayap bzzzz berosilasi cepat
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(210, now);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.95);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.96);
+
+      } else if (type === 'owl') {
+        // Burung Hantu: Hu-huuu lembut di malam hari
+        [0, 0.35].forEach((offset) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(410, now + offset);
+          osc.frequency.exponentialRampToValueAtTime(260, now + offset + 0.25);
+          gain.gain.setValueAtTime(0.32, now + offset);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.26);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + offset);
+          osc.stop(now + offset + 0.27);
+        });
+
+      } else if (type === 'dolphin') {
+        // Lumba-lumba: Rangkaian sonar klik & siul ultrasonik
+        [0, 0.08, 0.16, 0.24, 0.32].forEach(offset => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(1500, now + offset);
+          osc.frequency.exponentialRampToValueAtTime(2400, now + offset + 0.06);
+          gain.gain.setValueAtTime(0.28, now + offset);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.06);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + offset);
+          osc.stop(now + offset + 0.07);
+        });
+
+      } else if (type === 'rabbit') {
+        // Kelinci: Nada lompat hop-hop lucu
+        [0, 0.14, 0.28].forEach((offset, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(540 + (idx * 210), now + offset);
+          gain.gain.setValueAtTime(0.32, now + offset);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.11);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + offset);
+          osc.stop(now + offset + 0.12);
+        });
+      }
+    }
+
+    // Suara Kendaraan Realistis
+    function playVehicleSound(type) {
+      const ctx = getAudioContext();
+      const now = ctx.currentTime;
+
+      if (type === 'car' || type === 'bus' || type === 'truck') {
+        // Klakson ganda harmonik realistis (interval minor third)
+        const pitch1 = type === 'truck' ? 180 : (type === 'bus' ? 240 : 380);
+        const pitch2 = pitch1 * 1.26;
+
+        [0, 0.22].forEach(offset => {
+          const osc1 = ctx.createOscillator();
+          const osc2 = ctx.createOscillator();
+          const filter = ctx.createBiquadFilter();
+          const gain = ctx.createGain();
+
+          osc1.type = 'sawtooth';
+          osc2.type = 'sawtooth';
+          osc1.frequency.setValueAtTime(pitch1, now + offset);
+          osc2.frequency.setValueAtTime(pitch2, now + offset);
+
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(1400, now + offset);
+
+          gain.gain.setValueAtTime(0.35, now + offset);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.18);
+
+          osc1.connect(filter);
+          osc2.connect(filter);
+          filter.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc1.start(now + offset);
+          osc2.start(now + offset);
+          osc1.stop(now + offset + 0.19);
+          osc2.stop(now + offset + 0.19);
+        });
+
+      } else if (type === 'ambulance') {
+        // Sirene Ambulans Dua Nada "Hi-Lo" (Ninoo - Ninoo)
+        [0, 0.38].forEach((offset, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(idx === 0 ? 880 : 660, now + offset);
+          gain.gain.setValueAtTime(0.35, now + offset);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.35);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + offset);
+          osc.stop(now + offset + 0.36);
+        });
+
+      } else if (type === 'fire') {
+        // Mobil Pemadam: Sirene Melengking Naik-Turun (Wail Siren)
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(600, now);
+        osc.frequency.linearRampToValueAtTime(1050, now + 0.4);
+        osc.frequency.linearRampToValueAtTime(600, now + 0.85);
+
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.38, now + 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.88);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.9);
+
+      } else if (type === 'rocket') {
+        // Roket: Gemuruh pembakaran mesin pendorong (Rocket Thruster roar)
+        const osc = ctx.createOscillator();
+        const filter = ctx.createBiquadFilter();
+        const gain = ctx.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(60, now);
+        osc.frequency.exponentialRampToValueAtTime(550, now + 1.3);
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(250, now);
+        filter.frequency.linearRampToValueAtTime(1200, now + 1.3);
+
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.4, now + 0.3);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 1.35);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 1.36);
+
+      } else if (type === 'tractor') {
+        // Traktor: Deru mesin diesel 2-tak berat "Puk-puk-puk"
+        for (let i = 0; i < 6; i++) {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(65, now + (i * 0.13));
+          gain.gain.setValueAtTime(0.3, now + (i * 0.13));
+          gain.gain.exponentialRampToValueAtTime(0.01, now + (i * 0.13) + 0.09);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + (i * 0.13));
+          osc.stop(now + (i * 0.13) + 0.1);
+        }
+
+      } else if (type === 'heli') {
+        // Helikopter: Baling-baling memotong udara "Whop-whop-whop"
+        for (let i = 0; i < 7; i++) {
+          const osc = ctx.createOscillator();
+          const filter = ctx.createBiquadFilter();
+          const gain = ctx.createGain();
+
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(75, now + (i * 0.11));
+
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(280, now + (i * 0.11));
+
+          gain.gain.setValueAtTime(0.38, now + (i * 0.11));
+          gain.gain.exponentialRampToValueAtTime(0.01, now + (i * 0.11) + 0.08);
+
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc.start(now + (i * 0.11));
+          osc.stop(now + (i * 0.11) + 0.09);
+        }
+
+      } else if (type === 'ship') {
+        // Kapal Laut: Peluit Kabut Pelabuhan Berat (Deep Foghorn)
+        const osc1 = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc1.type = 'sawtooth';
+        osc2.type = 'triangle';
+        osc1.frequency.setValueAtTime(105, now);
+        osc2.frequency.setValueAtTime(132, now);
+
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.45, now + 0.2);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 1.4);
+
+        osc1.connect(gain);
+        osc2.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc1.start(now);
+        osc2.start(now);
+        osc1.stop(now + 1.42);
+        osc2.stop(now + 1.42);
+
+      } else if (type === 'bicycle') {
+        // Sepeda: Bel Kring-Kring Nyaring
+        [0, 0.07, 0.15, 0.22].forEach(offset => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(1980, now + offset);
+          gain.gain.setValueAtTime(0.28, now + offset);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.05);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + offset);
+          osc.stop(now + offset + 0.06);
+        });
+
+      } else if (type === 'plane') {
+        // Pesawat Terbang: Deru Turbin Jet Lepas Landas
+        const osc = ctx.createOscillator();
+        const filter = ctx.createBiquadFilter();
+        const gain = ctx.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(180, now);
+        osc.frequency.exponentialRampToValueAtTime(680, now + 0.7);
+
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(800, now);
+        filter.Q.value = 1.8;
+
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.4, now + 0.4);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 1.25);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(now);
+        osc.stop(now + 1.26);
+
+      } else if (type === 'train') {
+        // Kereta Api: Peluit Uap Klasik Dua Akord (Tuut-Tuuut!)
+        [0, 0.38].forEach((offset) => {
+          const osc1 = ctx.createOscillator();
+          const osc2 = ctx.createOscillator();
+          const gain = ctx.createGain();
+
+          osc1.type = 'sawtooth';
+          osc2.type = 'triangle';
+          osc1.frequency.setValueAtTime(349.23, now + offset); // F4
+          osc2.frequency.setValueAtTime(440, now + offset);    // A4
+
+          gain.gain.setValueAtTime(0.3, now + offset);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.32);
+
+          osc1.connect(gain);
+          osc2.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc1.start(now + offset);
+          osc2.start(now + offset);
+          osc1.stop(now + offset + 0.34);
+          osc2.stop(now + offset + 0.34);
+        });
+      }
+    }
+
+    // Suara Kendaraan
+    function playVehicleSound(type) {
+      const ctx = getAudioContext();
+      const now = ctx.currentTime;
+
+      if (type === 'car' || type === 'bus' || type === 'truck') {
+        const pitch = type === 'truck' ? 220 : (type === 'bus' ? 320 : 440);
+        [0, 0.2].forEach((offset) => {
+          const osc1 = ctx.createOscillator();
+          const osc2 = ctx.createOscillator();
+          const gain = ctx.createGain();
+
+          osc1.type = 'triangle';
+          osc2.type = 'sawtooth';
+          osc1.frequency.setValueAtTime(pitch, now + offset);
+          osc2.frequency.setValueAtTime(pitch * 1.25, now + offset);
+
+          gain.gain.setValueAtTime(0.3, now + offset);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.15);
+
+          osc1.connect(gain);
+          osc2.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc1.start(now + offset);
+          osc2.start(now + offset);
+          osc1.stop(now + offset + 0.16);
+          osc2.stop(now + offset + 0.16);
+        });
+
+      } else if (type === 'ambulance') {
+        // Sirene Ambulans "Ninoo Ninoo"
+        [0, 0.35].forEach((offset, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(idx === 0 ? 800 : 600, now + offset);
+          gain.gain.setValueAtTime(0.3, now + offset);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.32);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + offset);
+          osc.stop(now + offset + 0.33);
+        });
+
+      } else if (type === 'rocket') {
+        // Gemuruh Roket Meluncur
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(80, now);
+        osc.frequency.exponentialRampToValueAtTime(700, now + 1.2);
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 1.2);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 1.25);
+
+      } else if (type === 'tractor') {
+        // Deru Traktor Sawah
+        for (let i = 0; i < 5; i++) {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(70, now + (i * 0.14));
+          gain.gain.setValueAtTime(0.25, now + (i * 0.14));
+          gain.gain.exponentialRampToValueAtTime(0.01, now + (i * 0.14) + 0.1);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + (i * 0.14));
+          osc.stop(now + (i * 0.14) + 0.11);
+        }
+
+      } else if (type === 'fire') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(650, now);
+        osc.frequency.linearRampToValueAtTime(950, now + 0.35);
+        osc.frequency.linearRampToValueAtTime(650, now + 0.7);
+
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.72);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.73);
+
+      } else if (type === 'heli') {
+        for (let i = 0; i < 6; i++) {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(80, now + (i * 0.12));
+          gain.gain.setValueAtTime(0.35, now + (i * 0.12));
+          gain.gain.exponentialRampToValueAtTime(0.01, now + (i * 0.12) + 0.08);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + (i * 0.12));
+          osc.stop(now + (i * 0.12) + 0.09);
+        }
+
+      } else if (type === 'ship') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(110, now);
+        gain.gain.setValueAtTime(0.01, now);
+        gain.gain.linearRampToValueAtTime(0.4, now + 0.2);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 1.4);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 1.42);
+
+      } else if (type === 'bicycle') {
+        [0, 0.08, 0.18, 0.26].forEach(offset => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(1900, now + offset);
+          gain.gain.setValueAtTime(0.25, now + offset);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.06);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + offset);
+          osc.stop(now + offset + 0.07);
+        });
+
+      } else if (type === 'plane') {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(200, now);
+        osc.frequency.exponentialRampToValueAtTime(800, now + 0.6);
+        osc.frequency.exponentialRampToValueAtTime(300, now + 1.2);
+
+        gain.gain.setValueAtTime(0.05, now);
+        gain.gain.linearRampToValueAtTime(0.35, now + 0.5);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 1.2);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 1.21);
+
+      } else if (type === 'train') {
+        [0, 0.4].forEach((offset) => {
+          const osc1 = ctx.createOscillator();
+          const osc2 = ctx.createOscillator();
+          const gain = ctx.createGain();
+
+          osc1.type = 'sawtooth';
+          osc2.type = 'triangle';
+          osc1.frequency.setValueAtTime(330, now + offset);
+          osc2.frequency.setValueAtTime(392, now + offset);
+
+          gain.gain.setValueAtTime(0.25, now + offset);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.35);
+
+          osc1.connect(gain);
+          osc2.connect(gain);
+          gain.connect(ctx.destination);
+
+          osc1.start(now + offset);
+          osc2.start(now + offset);
+          osc1.stop(now + offset + 0.36);
+          osc2.stop(now + offset + 0.36);
+        });
+      }
+    }
+
+    // Suara Speech Fonik Menggunakan Web Speech API (Local TTS)
+    // Diperlambat secara default ke rate 0.62 agar sangat jelas bagi balita
+    function speakWord(text, rate = 0.62) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel(); // Stop prev speech
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'id-ID';
+        utterance.rate = rate; // Sangat pelan & ramah balita
+        utterance.pitch = 1.25; // Nada riang & manis
+        window.speechSynthesis.speak(utterance);
+      } else {
+        playTone(550, 'sine', 0.2);
+      }
+    }
+
+    // Eja suku kata perlahan dengan jeda koma (contoh: "K-U... C-I-N-G")
+    function spellSyllables(syllables, fullWord) {
+      const textToSpell = `${syllables.join('... ')}... ${fullWord}!`;
+      speakWord(textToSpell, 0.55); // Rate 0.55 ekstra lambat untuk mengeja
+    }
+
+    /* =========================================================================
+       DATA MASTER: HEWAN & TRANSPORTASI (Untuk Panggung Interaktif & Grid)
+       ========================================================================= */
+    const animalsCatalog = [
+      { id: 'cat', name: 'Kucing', soundText: 'Mee-oong!', emoji: '🐱', bg: 'from-amber-100 to-orange-100', border: 'border-amber-400', tagBg: 'bg-amber-500', syllables: ['Ku', 'cing'], desc: 'Kucing suka dielus dan suka ikan.' },
+      { id: 'dog', name: 'Anjing', soundText: 'Guk-guk!', emoji: '🐶', bg: 'from-orange-100 to-amber-200', border: 'border-orange-400', tagBg: 'bg-orange-500', syllables: ['An', 'jing'], desc: 'Anjing setia menjaga rumah kita.' },
+      { id: 'cow', name: 'Sapi', soundText: 'Mooo-ww!', emoji: '🐮', bg: 'from-emerald-100 to-teal-100', border: 'border-emerald-400', tagBg: 'bg-emerald-500', syllables: ['Sa', 'pi'], desc: 'Sapi menghasilkan susu segar lezat.' },
+      { id: 'sheep', name: 'Domba', soundText: 'Mbeeek!', emoji: '🐑', bg: 'from-sky-100 to-indigo-100', border: 'border-sky-400', tagBg: 'bg-sky-500', syllables: ['Dom', 'ba'], desc: 'Domba memiliki bulu wol yang hangat.' },
+      { id: 'horse', name: 'Kuda', soundText: 'Hii-haaa!', emoji: '🐴', bg: 'from-amber-100 to-yellow-200', border: 'border-amber-500', tagBg: 'bg-amber-600', syllables: ['Ku', 'da'], desc: 'Kuda berlari kencang di padang rumput.' },
+      { id: 'duck', name: 'Bebek', soundText: 'Kwek-kwek!', emoji: '🦆', bg: 'from-yellow-100 to-amber-100', border: 'border-yellow-400', tagBg: 'bg-yellow-500', syllables: ['Be', 'bek'], desc: 'Bebek pandai berenang di danau.' },
+      { id: 'lion', name: 'Singa', soundText: 'Rrr-oaar!', emoji: '🦁', bg: 'from-rose-100 to-red-100', border: 'border-rose-400', tagBg: 'bg-rose-500', syllables: ['Si', 'nga'], desc: 'Singa adalah raja hutan yang gagah.' },
+      { id: 'tiger', name: 'Harimau', soundText: 'Graaa-wrr!', emoji: '🐯', bg: 'from-orange-100 to-red-100', border: 'border-orange-500', tagBg: 'bg-orange-600', syllables: ['Ha', 'ri', 'mau'], desc: 'Harimau loreng yang lincah dan kuat.' },
+      { id: 'rooster', name: 'Ayam', soundText: 'Kukuruyuk!', emoji: '🐓', bg: 'from-red-100 to-rose-200', border: 'border-red-400', tagBg: 'bg-red-500', syllables: ['A', 'yam'], desc: 'Ayam berkokok menyambut matahari pagi.' },
+      { id: 'elephant', name: 'Gajah', soundText: 'Trompet Belalai!', emoji: '🐘', bg: 'from-indigo-100 to-purple-100', border: 'border-indigo-400', tagBg: 'bg-indigo-500', syllables: ['Ga', 'jah'], desc: 'Gajah bertubuh besar dengan belalai panjang.' },
+      { id: 'frog', name: 'Katak', soundText: 'Kwekk-kwekk!', emoji: '🐸', bg: 'from-teal-100 to-emerald-100', border: 'border-teal-400', tagBg: 'bg-teal-500', syllables: ['Ka', 'tak'], desc: 'Katak melompat lincah di kolam.' },
+      { id: 'monkey', name: 'Monyet', soundText: 'Uu-aa-aa!', emoji: '🐵', bg: 'from-amber-100 to-orange-200', border: 'border-amber-500', tagBg: 'bg-amber-600', syllables: ['Mon', 'yet'], desc: 'Monyet suka bergelantungan dan makan pisang.' },
+      { id: 'rabbit', name: 'Kelinci', soundText: 'Hop-hop!', emoji: '🐰', bg: 'from-pink-100 to-rose-100', border: 'border-pink-400', tagBg: 'bg-pink-500', syllables: ['Ke', 'lin', 'ci'], desc: 'Kelinci bertelinga panjang suka wortel.' },
+      { id: 'bee', name: 'Lebah', soundText: 'Bzzz-bzzz!', emoji: '🐝', bg: 'from-yellow-100 to-amber-200', border: 'border-yellow-500', tagBg: 'bg-yellow-600', syllables: ['Le', 'bah'], desc: 'Lebah membuat madu manis yang sehat.' },
+      { id: 'owl', name: 'Burung Hantu', soundText: 'Hu-huuu!', emoji: '🦉', bg: 'from-purple-100 to-indigo-100', border: 'border-purple-400', tagBg: 'bg-purple-500', syllables: ['Bu', 'rung', 'Han', 'tu'], desc: 'Burung hantu matanya bulat melihat di malam hari.' },
+      { id: 'dolphin', name: 'Lumba-lumba', soundText: 'Siulan Air!', emoji: '🐬', bg: 'from-cyan-100 to-sky-100', border: 'border-cyan-400', tagBg: 'bg-cyan-500', syllables: ['Lum', 'ba'], desc: 'Lumba-lumba sahabat laut yang cerdas.' }
+    ];
+
+    const vehiclesCatalog = [
+      { id: 'car', name: 'Mobil', soundText: 'Tin-tiinn!', emoji: '🚗', bg: 'from-sky-100 to-blue-100', border: 'border-sky-400', tagBg: 'bg-sky-500', syllables: ['Mo', 'bil'], desc: 'Mobil roda empat melaju di jalan beraspal.' },
+      { id: 'fire', name: 'Pemadam', soundText: 'Wiuu-wiuu!', emoji: '🚒', bg: 'from-red-100 to-rose-200', border: 'border-red-400', tagBg: 'bg-red-500', syllables: ['Pe', 'ma', 'dam'], desc: 'Mobil pemadam sigap memadamkan api.' },
+      { id: 'ambulance', name: 'Ambulans', soundText: 'Ninoo-ninoo!', emoji: '🚑', bg: 'from-rose-100 to-red-100', border: 'border-rose-400', tagBg: 'bg-rose-500', syllables: ['Am', 'bu', 'lans'], desc: 'Membawa orang sakit cepat ke rumah sakit.' },
+      { id: 'bus', name: 'Bus Sekolah', soundText: 'Din-dinn!', emoji: '🚌', bg: 'from-yellow-100 to-amber-200', border: 'border-yellow-400', tagBg: 'bg-yellow-500', syllables: ['Bus', 'Se', 'ko', 'lah'], desc: 'Mengantar anak-anak riang pergi ke sekolah.' },
+      { id: 'train', name: 'Kereta Api', soundText: 'Tuut-tuut!', emoji: '🚂', bg: 'from-amber-100 to-orange-100', border: 'border-amber-400', tagBg: 'bg-amber-500', syllables: ['Ke', 're', 'ta'], desc: 'Kereta berjalan di atas rel yang panjang.' },
+      { id: 'plane', name: 'Pesawat', soundText: 'Wuuush!', emoji: '✈️', bg: 'from-indigo-100 to-sky-100', border: 'border-indigo-400', tagBg: 'bg-indigo-500', syllables: ['Pe', 'sa', 'wat'], desc: 'Terbang tinggi di atas awan melintasi pulau.' },
+      { id: 'rocket', name: 'Roket', soundText: 'Meluncur ke Bulan!', emoji: '🚀', bg: 'from-purple-100 to-pink-100', border: 'border-purple-400', tagBg: 'bg-purple-500', syllables: ['Ro', 'ket'], desc: 'Meluncur menembus atmosfer menuju bintang.' },
+      { id: 'heli', name: 'Helikopter', soundText: 'Whop-whop!', emoji: '🚁', bg: 'from-teal-100 to-emerald-100', border: 'border-teal-400', tagBg: 'bg-teal-500', syllables: ['He', 'li', 'kop', 'ter'], desc: 'Baling-baling berputar mengangkat helikopter.' },
+      { id: 'ship', name: 'Kapal Laut', soundText: 'Fooog-horn!', emoji: '🚢', bg: 'from-blue-100 to-cyan-100', border: 'border-blue-400', tagBg: 'bg-blue-500', syllables: ['Ka', 'pal'], desc: 'Berenang megah mengarungi samudera luas.' },
+      { id: 'bicycle', name: 'Sepeda', soundText: 'Kring-kriing!', emoji: '🚲', bg: 'from-emerald-100 to-green-100', border: 'border-emerald-400', tagBg: 'bg-emerald-500', syllables: ['Se', 'pe', 'da'], desc: 'Dikayuh sehat bersama teman di sore hari.' },
+      { id: 'truck', name: 'Truk Besar', soundText: 'Brum-brumm!', emoji: '🚚', bg: 'from-orange-100 to-amber-200', border: 'border-orange-400', tagBg: 'bg-orange-500', syllables: ['Truk', 'Be', 'sar'], desc: 'Mengangkut muatan berat keliling kota.' },
+      { id: 'tractor', name: 'Traktor', soundText: 'Puk-puk-puk!', emoji: '🚜', bg: 'from-lime-100 to-emerald-100', border: 'border-lime-500', tagBg: 'bg-lime-600', syllables: ['Trak', 'tor'], desc: 'Membantu petani membajak sawah yang subur.' }
+    ];
+
+    let selectedAnimal = animalsCatalog[0];
+    let selectedVehicle = vehiclesCatalog[0];
+
+    /* =========================================================================
+       RENDER DENGAN KONSEP TATA LETAK SKETSA GAMBAR:
+       1 KARTU BESAR INTERAKTIF DI ATAS + GRID 2 KOLOM HEWAN/KENDARAAN DI BAWAH
+       ========================================================================= */
+    function getAnimalsViewHtml() {
+      return `
+        <div class="flex-1 flex flex-col h-full overflow-hidden">
+          <!-- Header Bar -->
+          <div class="flex items-center justify-between mb-2 shrink-0">
+            <div class="flex items-center space-x-2">
+              <button onclick="switchView('learn_hub')" class="p-1.5 bg-white rounded-xl border border-emerald-300 text-xs active-press">⬅️</button>
+              <div>
+                <h2 class="text-base font-black text-emerald-900 leading-tight">Sahabat Satwa 🦁</h2>
+                <p class="text-[10px] text-emerald-700 font-bold">Sentuh kartu atas untuk suara & ejaannya!</p>
+              </div>
+            </div>
+            <button onclick="playRewardJingle()" class="px-2.5 py-1 bg-yellow-400 rounded-full font-bold text-xs shadow active-press">⭐</button>
+          </div>
+
+          <!-- KARTU UTAMA INTERAKTIF BESAR DI ATAS (SESUAI GAMBAR SKETSA) -->
+          <div id="animalStageCard" class="shrink-0 bg-white border-4 ${selectedAnimal.border} rounded-3xl p-3.5 mb-2.5 shadow-lg relative flex flex-col items-center justify-center text-center stage-card-glow transition-all duration-300">
+            <!-- Badge Kategori -->
+            <div class="flex items-center justify-between w-full mb-1">
+              <span class="text-[9px] uppercase tracking-wider font-black ${selectedAnimal.tagBg} text-white px-2.5 py-0.5 rounded-full">
+                Interaktif Terpilih
+              </span>
+              <span class="text-xs bg-amber-100 text-amber-800 font-black px-2.5 py-0.5 rounded-full border border-amber-300">
+                ${selectedAnimal.soundText}
+              </span>
+            </div>
+
+            <!-- Ilustrasi Hewan Besar Interaktif -->
+            <div onclick="triggerActiveAnimalAction()" class="relative my-1 cursor-pointer active-press">
+              <div class="w-24 h-24 rounded-3xl bg-gradient-to-br ${selectedAnimal.bg} border-2 border-white/80 shadow-inner flex items-center justify-center text-6xl bounce-card">
+                <span id="animalStageEmoji">${selectedAnimal.emoji}</span>
+              </div>
+              <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded-full border-2 border-white shadow">
+                🔊 Sentuh!
+              </div>
+            </div>
+
+            <!-- Nama & Ejaan Suku Kata Lambat -->
+            <h3 id="animalStageName" class="text-xl font-black text-slate-800 mt-1">${selectedAnimal.name}</h3>
+            <div id="animalStageSyllables" class="flex items-center space-x-1.5 my-1">
+              ${selectedAnimal.syllables.map(s => `
+                <span class="bg-amber-100 text-amber-900 border border-amber-300 font-black text-xs px-2.5 py-0.5 rounded-xl shadow-xs">${s}</span>
+              `).join('')}
+            </div>
+            <p id="animalStageDesc" class="text-[11px] text-slate-500 font-semibold max-w-xs leading-snug px-2">${selectedAnimal.desc}</p>
+
+            <!-- Tombol Interaksi Cepat -->
+            <div class="flex space-x-2 mt-2 w-full max-w-xs">
+              <button onclick="triggerActiveAnimalSound()" class="flex-1 py-1.5 bg-emerald-500 text-white rounded-xl font-black text-xs shadow active-press flex items-center justify-center space-x-1">
+                <span>📢</span>
+                <span>Suara Realistis</span>
+              </button>
+              <button onclick="triggerActiveAnimalSpell()" class="flex-1 py-1.5 bg-amber-500 text-white rounded-xl font-black text-xs shadow active-press flex items-center justify-center space-x-1">
+                <span>🔤</span>
+                <span>Eja Pelan</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- GRID 2 KOLOM KARTU HEWAN LAIN DI BAWAH (SESUAI GAMBAR SKETSA) -->
+          <div class="flex-1 overflow-y-auto pr-1 pb-2">
+            <p class="text-[10px] font-black text-sky-800 uppercase tracking-wider mb-1.5 px-1">Pilih Hewan Lain:</p>
+            <div class="grid grid-cols-2 gap-2.5">
+              ${animalsCatalog.map(item => `
+                <div onclick="selectAnimal('${item.id}')" class="bg-white border-3 ${item.id === selectedAnimal.id ? 'border-emerald-500 ring-2 ring-emerald-300 bg-emerald-50/50' : 'border-slate-200'} rounded-2xl p-2.5 flex flex-col items-center justify-center text-center shadow-sm active-press cursor-pointer transition">
+                  <div class="text-3xl mb-1">${item.emoji}</div>
+                  <h4 class="font-black text-xs text-slate-800 leading-tight">${item.name}</h4>
+                  <span class="text-[9px] text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded-full mt-1">${item.soundText}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function getVehiclesViewHtml() {
+      return `
+        <div class="flex-1 flex flex-col h-full overflow-hidden">
+          <!-- Header Bar -->
+          <div class="flex items-center justify-between mb-2 shrink-0">
+            <div class="flex items-center space-x-2">
+              <button onclick="switchView('learn_hub')" class="p-1.5 bg-white rounded-xl border border-sky-300 text-xs active-press">⬅️</button>
+              <div>
+                <h2 class="text-base font-black text-sky-900 leading-tight">Kendaraan Hebat 🚗</h2>
+                <p class="text-[10px] text-sky-700 font-bold">Sentuh kartu atas untuk klakson & ejaannya!</p>
+              </div>
+            </div>
+            <button onclick="playRewardJingle()" class="px-2.5 py-1 bg-yellow-400 rounded-full font-bold text-xs shadow active-press">⭐</button>
+          </div>
+
+          <!-- KARTU UTAMA INTERAKTIF BESAR DI ATAS (SESUAI GAMBAR SKETSA) -->
+          <div id="vehicleStageCard" class="shrink-0 bg-white border-4 ${selectedVehicle.border} rounded-3xl p-3.5 mb-2.5 shadow-lg relative flex flex-col items-center justify-center text-center stage-card-glow transition-all duration-300">
+            <!-- Badge Kategori -->
+            <div class="flex items-center justify-between w-full mb-1">
+              <span class="text-[9px] uppercase tracking-wider font-black ${selectedVehicle.tagBg} text-white px-2.5 py-0.5 rounded-full">
+                Interaktif Terpilih
+              </span>
+              <span class="text-xs bg-sky-100 text-sky-800 font-black px-2.5 py-0.5 rounded-full border border-sky-300">
+                ${selectedVehicle.soundText}
+              </span>
+            </div>
+
+            <!-- Ilustrasi Kendaraan Besar Interaktif -->
+            <div onclick="triggerActiveVehicleAction()" class="relative my-1 cursor-pointer active-press">
+              <div class="w-24 h-24 rounded-3xl bg-gradient-to-br ${selectedVehicle.bg} border-2 border-white/80 shadow-inner flex items-center justify-center text-6xl bounce-card">
+                <span id="vehicleStageEmoji">${selectedVehicle.emoji}</span>
+              </div>
+              <div class="absolute -bottom-1 -right-1 bg-amber-400 text-slate-900 text-[10px] font-black px-2 py-0.5 rounded-full border-2 border-white shadow">
+                🔊 Sentuh!
+              </div>
+            </div>
+
+            <!-- Nama & Ejaan Suku Kata Lambat -->
+            <h3 id="vehicleStageName" class="text-xl font-black text-slate-800 mt-1">${selectedVehicle.name}</h3>
+            <div id="vehicleStageSyllables" class="flex items-center space-x-1.5 my-1">
+              ${selectedVehicle.syllables.map(s => `
+                <span class="bg-sky-100 text-sky-900 border border-sky-300 font-black text-xs px-2.5 py-0.5 rounded-xl shadow-xs">${s}</span>
+              `).join('')}
+            </div>
+            <p id="vehicleStageDesc" class="text-[11px] text-slate-500 font-semibold max-w-xs leading-snug px-2">${selectedVehicle.desc}</p>
+
+            <!-- Tombol Interaksi Cepat -->
+            <div class="flex space-x-2 mt-2 w-full max-w-xs">
+              <button onclick="triggerActiveVehicleSound()" class="flex-1 py-1.5 bg-sky-500 text-white rounded-xl font-black text-xs shadow active-press flex items-center justify-center space-x-1">
+                <span>🚨</span>
+                <span>Klakson & Mesin</span>
+              </button>
+              <button onclick="triggerActiveVehicleSpell()" class="flex-1 py-1.5 bg-amber-500 text-white rounded-xl font-black text-xs shadow active-press flex items-center justify-center space-x-1">
+                <span>🔤</span>
+                <span>Eja Pelan</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- GRID 2 KOLOM KARTU KENDARAAN LAIN DI BAWAH (SESUAI GAMBAR SKETSA) -->
+          <div class="flex-1 overflow-y-auto pr-1 pb-2">
+            <p class="text-[10px] font-black text-sky-800 uppercase tracking-wider mb-1.5 px-1">Pilih Kendaraan Lain:</p>
+            <div class="grid grid-cols-2 gap-2.5">
+              ${vehiclesCatalog.map(item => `
+                <div onclick="selectVehicle('${item.id}')" class="bg-white border-3 ${item.id === selectedVehicle.id ? 'border-sky-500 ring-2 ring-sky-300 bg-sky-50/50' : 'border-slate-200'} rounded-2xl p-2.5 flex flex-col items-center justify-center text-center shadow-sm active-press cursor-pointer transition">
+                  <div class="text-3xl mb-1">${item.emoji}</div>
+                  <h4 class="font-black text-xs text-slate-800 leading-tight">${item.name}</h4>
+                  <span class="text-[9px] text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded-full mt-1">${item.soundText}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function selectAnimal(id) {
+      const target = animalsCatalog.find(a => a.id === id);
+      if (target) {
+        selectedAnimal = target;
+        switchView('animals');
+        triggerActiveAnimalAction();
+      }
+    }
+
+    function triggerActiveAnimalAction() {
+      playAnimalSound(selectedAnimal.id);
+      showToast(`${selectedAnimal.emoji} ${selectedAnimal.name}: ${selectedAnimal.soundText}`);
+      setTimeout(() => {
+        spellSyllables(selectedAnimal.syllables, selectedAnimal.name);
+      }, 700);
+    }
+
+    function triggerActiveAnimalSound() {
+      playAnimalSound(selectedAnimal.id);
+      showToast(`Suara ${selectedAnimal.name}!`);
+    }
+
+    function triggerActiveAnimalSpell() {
+      spellSyllables(selectedAnimal.syllables, selectedAnimal.name);
+    }
+
+    function selectVehicle(id) {
+      const target = vehiclesCatalog.find(v => v.id === id);
+      if (target) {
+        selectedVehicle = target;
+        switchView('vehicles');
+        triggerActiveVehicleAction();
+      }
+    }
+
+    function triggerActiveVehicleAction() {
+      playVehicleSound(selectedVehicle.id);
+      showToast(`${selectedVehicle.emoji} ${selectedVehicle.name}: ${selectedVehicle.soundText}`);
+      setTimeout(() => {
+        spellSyllables(selectedVehicle.syllables, selectedVehicle.name);
+      }, 750);
+    }
+
+    function triggerActiveVehicleSound() {
+      playVehicleSound(selectedVehicle.id);
+      showToast(`Klakson ${selectedVehicle.name}!`);
+    }
+
+    function triggerActiveVehicleSpell() {
+      spellSyllables(selectedVehicle.syllables, selectedVehicle.name);
+    }
+
+    /* =========================================================================
+       2. FITUR REKAM SUARA (Voice Mimic Studio)
+       ========================================================================= */
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let recordedAudioUrl = null;
+    let isRecording = false;
+
+    async function toggleVoiceRecord() {
+      const btn = document.getElementById('recordBtn');
+      const statusText = document.getElementById('recordStatus');
+      const playBtnWrap = document.getElementById('playRecordedBtn');
+
+      if (!isRecording) {
+        // Mulai Merekam
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+          audioChunks = [];
+
+          mediaRecorder.ondataavailable = (e) => {
+            if (e.data.size > 0) audioChunks.push(e.data);
+          };
+
+          mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            recordedAudioUrl = URL.createObjectURL(audioBlob);
+            if (playBtnWrap) playBtnWrap.classList.remove('hidden');
+          };
+
+          mediaRecorder.start();
+          isRecording = true;
+          btn.classList.add('recording-pulse', 'bg-red-500');
+          btn.classList.remove('bg-amber-500');
+          statusText.innerText = "Sedang Merekam... Ayo Bicara!";
+          playTone(600, 'sine', 0.15);
+        } catch (err) {
+          console.warn("Mikrofon tidak diizinkan atau tidak tersedia:", err);
+          showToast("Izin mikrofon diperlukan ya!");
+        }
+      } else {
+        // Hentikan Merekam
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+          mediaRecorder.stop();
+          mediaRecorder.stream.getTracks().forEach(track => track.stop());
+        }
+        isRecording = false;
+        btn.classList.remove('recording-pulse', 'bg-red-500');
+        btn.classList.add('bg-amber-500');
+        statusText.innerText = "Rekaman selesai! Dengarkan yuk 👇";
+        playRewardJingle();
+      }
+    }
+
+    function playRecordedVoice(pitchShift = 1.0) {
+      if (!recordedAudioUrl) return;
+      const audio = new Audio(recordedAudioUrl);
+      audio.playbackRate = pitchShift; // 1.2 untuk suara lucu anak kelinci
+      audio.play();
+    }
+
+    /* =========================================================================
+       3. MODAL ORANG TUA (Parental Lock Gate)
+       ========================================================================= */
+    let mathAns = 8;
+    function openParentalLock() {
+      playTone(400, 'sine', 0.1);
+      const n1 = Math.floor(Math.random() * 5) + 3;
+      const n2 = Math.floor(Math.random() * 5) + 2;
+      mathAns = n1 + n2;
+      document.getElementById('mathDisplay').innerText = `${n1} + ${n2} = ?`;
+      document.getElementById('parentalInput').value = '';
+      document.getElementById('parentalError').classList.add('hidden');
+      document.getElementById('parentalModal').classList.remove('hidden');
+    }
+
+    function closeParentalLock() {
+      document.getElementById('parentalModal').classList.add('hidden');
+    }
+
+    function verifyParentalLock() {
+      const val = parseInt(document.getElementById('parentalInput').value, 10);
+      if (val === mathAns) {
+        closeParentalLock();
+        alert("Mode Pengaturan Launcher Terbuka:\n1. Kunci Kiosk Aktif\n2. Batas Waktu Layar: 30 Menit\n3. Proteksi Pembelian: Aktif");
+      } else {
+        document.getElementById('parentalError').classList.remove('hidden');
+        playTone(200, 'sawtooth', 0.25);
+      }
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      toast.innerText = text;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 2200);
+    }
+
+    /* =========================================================================
+       4. TEMPLATE VIEWS (Layar Interaktif)
+       ========================================================================= */
+    const views = {
+      // BERANDA UTAMA (Launcher Grid Ceria)
+      home: `
+        <div class="flex-1 flex flex-col justify-between py-1">
+          <!-- Banner Hero -->
+          <div class="bg-gradient-to-r from-amber-400 to-orange-400 rounded-3xl p-3.5 text-white shadow-lg flex items-center justify-between border-2 border-white mb-2.5">
+            <div>
+              <span class="text-[10px] bg-white/30 px-2 py-0.5 rounded-full font-black uppercase tracking-wider">100% Bebas Kuota</span>
+              <h2 class="text-lg font-black mt-1">Dunia Belajar Ceria!</h2>
+              <p class="text-[11px] opacity-95">Pilih menu seru di bawah ini ya!</p>
+            </div>
+            <div class="text-4xl bounce-card">🎈</div>
+          </div>
+
+          <!-- Modul Cards Grid (4 Pilihan Luas & Menyenangkan) -->
+          <div class="grid grid-cols-2 gap-3 flex-1 overflow-y-auto pr-0.5 pb-2">
+            <!-- Kartu Pusat Belajar -->
+            <div onclick="switchView('learn_hub')" class="bg-gradient-to-br from-emerald-100 to-teal-100 hover:from-emerald-200 hover:to-teal-200 border-4 border-emerald-400 rounded-3xl p-3 flex flex-col items-center justify-center text-center shadow-md active-press cursor-pointer">
+              <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-inner mb-1.5">
+                🎒
+              </div>
+              <h3 class="font-black text-emerald-900 text-sm">Pusat Belajar</h3>
+              <p class="text-[10px] text-emerald-700 font-bold">Hewan, Mobil, Buah, Huruf</p>
+            </div>
+
+            <!-- Kartu Video Canvas Interaktif -->
+            <div onclick="switchView('video')" class="bg-gradient-to-br from-pink-100 to-rose-100 hover:from-pink-200 hover:to-rose-200 border-4 border-pink-400 rounded-3xl p-3 flex flex-col items-center justify-center text-center shadow-md active-press cursor-pointer">
+              <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-inner mb-1.5">
+                🎬
+              </div>
+              <h3 class="font-black text-pink-900 text-sm">Kartun Interaktif</h3>
+              <p class="text-[10px] text-pink-700 font-bold">Sentuh & Bereaksi</p>
+            </div>
+
+            <!-- Kartu Huruf & Membaca Langsung -->
+            <div onclick="switchView('reading')" class="bg-gradient-to-br from-purple-100 to-indigo-100 hover:from-purple-200 hover:to-indigo-200 border-4 border-purple-400 rounded-3xl p-3 flex flex-col items-center justify-center text-center shadow-md active-press cursor-pointer">
+              <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-inner mb-1.5">
+                🔤
+              </div>
+              <h3 class="font-black text-purple-900 text-sm">Belajar Membaca</h3>
+              <p class="text-[10px] text-purple-700 font-bold">Eja Kata Perlahan</p>
+            </div>
+
+            <!-- Kartu Studio Suara -->
+            <div onclick="switchView('mimic')" class="bg-gradient-to-br from-amber-100 to-yellow-100 hover:from-amber-200 hover:to-yellow-200 border-4 border-amber-400 rounded-3xl p-3 flex flex-col items-center justify-center text-center shadow-md active-press cursor-pointer">
+              <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-inner mb-1.5">
+                🎙️
+              </div>
+              <h3 class="font-black text-amber-900 text-sm">Tirukan Suara</h3>
+              <p class="text-[10px] text-amber-700 font-bold">Rekam & Ubah Nada Lucu</p>
+            </div>
+          </div>
+
+          <!-- Quick Banner Angka & Balon -->
+          <div onclick="switchView('numbers')" class="bg-white/95 border-3 border-amber-300 rounded-2xl p-2.5 flex items-center justify-between shadow active-press cursor-pointer mt-1">
+            <div class="flex items-center space-x-2">
+              <span class="text-3xl">🔢</span>
+              <div>
+                <p class="text-xs font-black text-slate-800">Ayo Menghitung 1 sampai 10</p>
+                <p class="text-[10px] text-amber-700 font-bold">Letuskan balon warna-warni!</p>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 bg-amber-400 text-white rounded-xl font-black text-xs">Mulai 🚀</span>
+          </div>
+        </div>
+      `,
+
+      // HUB KATEGORI BELAJAR (Rapi & Menampung Banyak Kategori)
+      learn_hub: `
+        <div class="flex-1 flex flex-col">
+          <div class="mb-3">
+            <h2 class="text-base font-black text-sky-900">Pilih Kategori Belajar 🎒</h2>
+            <p class="text-xs text-sky-700">Sentuh untuk membuka topik favoritmu:</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 flex-1 overflow-y-auto pb-3 pr-0.5">
+            <!-- Pilihan Hewan -->
+            <div onclick="switchView('animals')" class="bg-emerald-50 border-4 border-emerald-400 rounded-3xl p-3 flex flex-col items-center text-center shadow-sm active-press cursor-pointer">
+              <span class="text-5xl my-2">🦁</span>
+              <h3 class="font-black text-sm text-emerald-900">Sahabat Satwa</h3>
+              <p class="text-[10px] text-emerald-700 font-bold">16 Hewan Lucu & Suaranya</p>
+              <span class="mt-2 text-[10px] bg-emerald-500 text-white px-3 py-0.5 rounded-full font-bold">Buka 🐾</span>
+            </div>
+
+            <!-- Pilihan Transportasi -->
+            <div onclick="switchView('vehicles')" class="bg-sky-50 border-4 border-sky-400 rounded-3xl p-3 flex flex-col items-center text-center shadow-sm active-press cursor-pointer">
+              <span class="text-5xl my-2">🚗</span>
+              <h3 class="font-black text-sm text-sky-900">Kendaraan</h3>
+              <p class="text-[10px] text-sky-700 font-bold">12 Alat Transportasi</p>
+              <span class="mt-2 text-[10px] bg-sky-500 text-white px-3 py-0.5 rounded-full font-bold">Buka 🚦</span>
+            </div>
+
+            <!-- Pilihan Buah & Warna -->
+            <div onclick="switchView('fruits')" class="bg-rose-50 border-4 border-rose-400 rounded-3xl p-3 flex flex-col items-center text-center shadow-sm active-press cursor-pointer">
+              <span class="text-5xl my-2">🍎</span>
+              <h3 class="font-black text-sm text-rose-900">Buah & Warna</h3>
+              <p class="text-[10px] text-rose-700 font-bold">12 Buah Segar & Pelangi</p>
+              <span class="mt-2 text-[10px] bg-rose-500 text-white px-3 py-0.5 rounded-full font-bold">Buka 🍉</span>
+            </div>
+
+            <!-- Pilihan Membaca -->
+            <div onclick="switchView('reading')" class="bg-purple-50 border-4 border-purple-400 rounded-3xl p-3 flex flex-col items-center text-center shadow-sm active-press cursor-pointer">
+              <span class="text-5xl my-2">🔤</span>
+              <h3 class="font-black text-sm text-purple-900">Membaca & Eja</h3>
+              <p class="text-[10px] text-purple-700 font-bold">Alfabet & Suku Kata</p>
+              <span class="mt-2 text-[10px] bg-purple-500 text-white px-3 py-0.5 rounded-full font-bold">Buka 📖</span>
+            </div>
+          </div>
+        </div>
+      `,
+
+      // MODUL HEWAN (16 SATWA LENGKAP & SUARA KHAS)
+      animals: `
+        <div class="flex-1 flex flex-col">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center space-x-2">
+              <button onclick="switchView('learn_hub')" class="p-1.5 bg-white rounded-xl border border-emerald-300 text-xs active-press">⬅️</button>
+              <div>
+                <h2 class="text-base font-black text-emerald-900">Sahabat Satwa (16 Hewan) 🦁</h2>
+                <p class="text-[11px] text-emerald-700">Dengar suara asli & ejaan lambatnya</p>
+              </div>
+            </div>
+            <button onclick="playRewardJingle()" class="px-2.5 py-1 bg-yellow-400 rounded-full font-bold text-xs shadow active-press">⭐</button>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2.5 flex-1 overflow-y-auto pb-4 pr-1">
+            <!-- 1. Kucing -->
+            <div onclick="handleAnimalTap('cat', 'Kucing', 'Mee-oong!', ['Ku', 'cing'])" class="bg-white border-3 border-amber-300 rounded-2xl p-2 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🐱</div>
+              <h4 class="font-black text-sm text-slate-800">Kucing</h4>
+              <span class="text-[10px] text-amber-600 font-bold bg-amber-100 px-2 py-0.5 rounded-full mt-0.5">Meong!</span>
+            </div>
+
+            <!-- 2. Anjing -->
+            <div onclick="handleAnimalTap('dog', 'Anjing', 'Guk-guk!', ['An', 'jing'])" class="bg-white border-3 border-orange-300 rounded-2xl p-2 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🐶</div>
+              <h4 class="font-black text-sm text-slate-800">Anjing</h4>
+              <span class="text-[10px] text-orange-600 font-bold bg-orange-100 px-2 py-0.5 rounded-full mt-0.5">Guk Guk!</span>
+            </div>
+
+            <!-- 3. Sapi -->
+            <div onclick="handleAnimalTap('cow', 'Sapi', 'Mooo-ww!', ['Sa', 'pi'])" class="bg-white border-3 border-emerald-300 rounded-2xl p-2 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🐮</div>
+              <h4 class="font-black text-sm text-slate-800">Sapi</h4>
+              <span class="text-[10px] text-emerald-600 font-bold bg-emerald-100 px-2 py-0.5 rounded-full mt-0.5">Mooo!</span>
+            </div>
+
+            <!-- 4. Domba -->
+            <div onclick="handleAnimalTap('sheep', 'Domba', 'Mbeeek!', ['Dom', 'ba'])" class="bg-white border-3 border-sky-300 rounded-2xl p-2 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🐑</div>
+              <h4 class="font-black text-sm text-slate-800">Domba</h4>
+              <span class="text-[10px] text-sky-600 font-bold bg-sky-100 px-2 py-0.5 rounded-full mt-0.5">Mbeeek!</span>
+            </div>
+
+            <!-- 5. Kuda (BARU) -->
+            <div onclick="handleAnimalTap('horse', 'Kuda', 'Hii-haaa!', ['Ku', 'da'])" class="bg-white border-3 border-yellow-400 rounded-2xl p-2 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🐴</div>
+              <h4 class="font-black text-sm text-slate-800">Kuda</h4>
+              <span class="text-[10px] text-yellow-700 font-bold bg-yellow-100 px-2 py-0.5 rounded-full mt-0.5">Meringkik!</span>
+            </div>
+
+            <!-- 6. Bebek -->
+            <div onclick="handleAnimalTap('duck', 'Bebek', 'Kwek-kwek!', ['Be', 'bek'])" class="bg-white border-3 border-yellow-300 rounded-2xl p-2 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🦆</div>
+              <h4 class="font-black text-sm text-slate-800">Bebek</h4>
+              <span class="text-[10px] text-yellow-600 font-bold bg-yellow-100 px-2 py-0.5 rounded-full mt-0.5">Kwek Kwek!</span>
+            </div>
+
+            <!-- 7. Singa -->
+            <div onclick="handleAnimalTap('lion', 'Singa', 'Rrr-oaar!', ['Si', 'nga'])" class="bg-white border-3 border-red-300 rounded-2xl p-2 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🦁</div>
+              <h4 class="font-black text-sm text-slate-800">Singa</h4>
+              <span class="text-[10px] text-red-600 font-bold bg-red-100 px-2 py-0.5 rounded-full mt-0.5">Aummm!</span>
+            </div>
+
+            <!-- 8. Harimau (BARU) -->
+            <div onclick="handleAnimalTap('tiger', 'Harimau', 'Graaa-wrr!', ['Ha', 'ri', 'mau'])" class="bg-white border-3 border-orange-400 rounded-2xl p-2 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🐯</div>
+              <h4 class="font-black text-sm text-slate-800">Harimau</h4>
+              <span class="text-[10px] text-orange-700 font-bold bg-orange-100 px-2 py-0.5 rounded-full mt-0.5">Mengaum!</span>
+            </div>
+
+            <!-- 9. Ayam Jantan -->
+            <div onclick="handleAnimalTap('rooster', 'Ayam', 'Kukuruyuk!', ['A', 'yam'])" class="bg-white border-3 border-rose-300 rounded-2xl p-2 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🐓</div>
+              <h4 class="font-black text-sm text-slate-800">Ayam</h4>
+              <span class="text-[10px] text-rose-600 font-bold bg-rose-100 px-2 py-0.5 rounded-full mt-0.5">Kukuruyuk!</span>
+            </div>
+
+            <!-- 10. Gajah -->
+            <div onclick="handleAnimalTap('elephant', 'Gajah', 'Trompet Gajah!', ['Ga', 'jah'])" class="bg-white border-3 border-indigo-300 rounded-2xl p-2 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🐘</div>
+              <h4 class="font-black text-sm text-slate-800">Gajah</h4>
+              <span class="text-[10px] text-indigo-600 font-bold bg-indigo-100 px-2 py-0.5 rounded-full mt-0.5">Trompet!</span>
+            </div>
+
+            <!-- 11. Katak -->
+            <div onclick="handleAnimalTap('frog', 'Katak', 'Kwekk-kwekk!', ['Ka', 'tak'])" class="bg-white border-3 border-teal-300 rounded-2xl p-2 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🐸</div>
+              <h4 class="font-black text-sm text-slate-800">Katak</h4>
+              <span class="text-[10px] text-teal-600 font-bold bg-teal-100 px-2 py-0.5 rounded-full mt-0.5">Kwekk!</span>
+            </div>
+
+            <!-- 12. Monyet -->
+            <div onclick="handleAnimalTap('monkey', 'Monyet', 'Uu-aa-aa!', ['Mon', 'yet'])" class="bg-white border-3 border-amber-400 rounded-2xl p-2 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🐵</div>
+              <h4 class="font-black text-sm text-slate-800">Monyet</h4>
+              <span class="text-[10px] text-amber-700 font-bold bg-amber-100 px-2 py-0.5 rounded-full mt-0.5">Uu Aa Aa!</span>
+            </div>
+
+            <!-- 13. Kelinci (BARU) -->
+            <div onclick="handleAnimalTap('rabbit', 'Kelinci', 'Hop-hop!', ['Ke', 'lin', 'ci'])" class="bg-white border-3 border-pink-300 rounded-2xl p-2 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🐰</div>
+              <h4 class="font-black text-sm text-slate-800">Kelinci</h4>
+              <span class="text-[10px] text-pink-600 font-bold bg-pink-100 px-2 py-0.5 rounded-full mt-0.5">Hop Hop!</span>
+            </div>
+
+            <!-- 14. Lebah Madu (BARU) -->
+            <div onclick="handleAnimalTap('bee', 'Lebah', 'Bzzz-bzzz!', ['Le', 'bah'])" class="bg-white border-3 border-yellow-500 rounded-2xl p-2 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🐝</div>
+              <h4 class="font-black text-sm text-slate-800">Lebah</h4>
+              <span class="text-[10px] text-yellow-800 font-bold bg-yellow-100 px-2 py-0.5 rounded-full mt-0.5">Bzzz!</span>
+            </div>
+
+            <!-- 15. Burung Hantu (BARU) -->
+            <div onclick="handleAnimalTap('owl', 'Burung Hantu', 'Hu-huuu!', ['Bu', 'rung', 'Han', 'tu'])" class="bg-white border-3 border-purple-300 rounded-2xl p-2 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🦉</div>
+              <h4 class="font-black text-sm text-slate-800">Burung Hantu</h4>
+              <span class="text-[10px] text-purple-600 font-bold bg-purple-100 px-2 py-0.5 rounded-full mt-0.5">Hu Huu!</span>
+            </div>
+
+            <!-- 16. Lumba-lumba (BARU) -->
+            <div onclick="handleAnimalTap('dolphin', 'Lumba-lumba', 'Ciluk-ba air!', ['Lum', 'ba', 'Lum', 'ba'])" class="bg-white border-3 border-cyan-300 rounded-2xl p-2 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🐬</div>
+              <h4 class="font-black text-sm text-slate-800">Lumba-lumba</h4>
+              <span class="text-[10px] text-cyan-600 font-bold bg-cyan-100 px-2 py-0.5 rounded-full mt-0.5">Siulan Air!</span>
+            </div>
+          </div>
+        </div>
+      `,
+
+      // MODUL HEWAN (LAYOUT SKETSA: 1 KARTU BESAR INTERAKTIF + GRID 2 KOLOM DI BAWAH)
+      animals: '',
+
+      // MODUL TRANSPORTASI (LAYOUT SKETSA: 1 KARTU BESAR INTERAKTIF + GRID 2 KOLOM DI BAWAH)
+      vehicles: '',
+
+      // MODUL BUAH & WARNA (12 BUAH LENGKAP & EJAAN PERLAHAN)
+      fruits: `
+        <div class="flex-1 flex flex-col">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center space-x-2">
+              <button onclick="switchView('learn_hub')" class="p-1.5 bg-white rounded-xl border border-rose-300 text-xs active-press">⬅️</button>
+              <div>
+                <h2 class="text-base font-black text-rose-900">Buah & Warna Warni (12 Buah) 🍎</h2>
+                <p class="text-[11px] text-rose-700">Sentuh untuk dengar ejaan & warnanya</p>
+              </div>
+            </div>
+            <button onclick="playRewardJingle()" class="px-2.5 py-1 bg-yellow-400 rounded-full font-bold text-xs shadow active-press">⭐</button>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2.5 flex-1 overflow-y-auto pb-4 pr-1">
+            <div onclick="handleFruitTap('Apel', 'Merah', '🍎', 'Manis dan Segar!', ['A', 'pel'])" class="bg-rose-50 border-3 border-rose-400 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🍎</div>
+              <h4 class="font-black text-xs text-slate-800">Apel Merah</h4>
+              <span class="text-[9px] text-rose-600 font-bold bg-white px-2 py-0.5 rounded-full mt-1">Merah Manis</span>
+            </div>
+
+            <div onclick="handleFruitTap('Pisang', 'Kuning', '🍌', 'Manis dan Lembut!', ['Pi', 'sang'])" class="bg-amber-50 border-3 border-amber-400 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🍌</div>
+              <h4 class="font-black text-xs text-slate-800">Pisang</h4>
+              <span class="text-[9px] text-amber-600 font-bold bg-white px-2 py-0.5 rounded-full mt-1">Kuning Manis</span>
+            </div>
+
+            <div onclick="handleFruitTap('Jeruk', 'Oranye', '🍊', 'Segar Kaya Vitamin C!', ['Je', 'ruk'])" class="bg-orange-50 border-3 border-orange-400 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🍊</div>
+              <h4 class="font-black text-xs text-slate-800">Jeruk</h4>
+              <span class="text-[9px] text-orange-600 font-bold bg-white px-2 py-0.5 rounded-full mt-1">Jingga Segar</span>
+            </div>
+
+            <div onclick="handleFruitTap('Semangka', 'Hijau dan Merah', '🍉', 'Banyak Airnya Segar!', ['Se', 'mang', 'ka'])" class="bg-emerald-50 border-3 border-emerald-400 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🍉</div>
+              <h4 class="font-black text-xs text-slate-800">Semangka</h4>
+              <span class="text-[9px] text-emerald-600 font-bold bg-white px-2 py-0.5 rounded-full mt-1">Hijau Merah</span>
+            </div>
+
+            <div onclick="handleFruitTap('Anggur', 'Ungu', '🍇', 'Kecil Manis Enak!', ['Ang', 'gur'])" class="bg-purple-50 border-3 border-purple-400 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🍇</div>
+              <h4 class="font-black text-xs text-slate-800">Anggur</h4>
+              <span class="text-[9px] text-purple-600 font-bold bg-white px-2 py-0.5 rounded-full mt-1">Ungu Cantik</span>
+            </div>
+
+            <div onclick="handleFruitTap('Stroberi', 'Merah Berbintik', '🍓', 'Asam Manis Segar!', ['Stro', 'be', 'ri'])" class="bg-pink-50 border-3 border-pink-400 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🍓</div>
+              <h4 class="font-black text-xs text-slate-800">Stroberi</h4>
+              <span class="text-[9px] text-pink-600 font-bold bg-white px-2 py-0.5 rounded-full mt-1">Merah Cerah</span>
+            </div>
+
+            <!-- Mangga (BARU) -->
+            <div onclick="handleFruitTap('Mangga', 'Kuning dan Hijau', '🥭', 'Manis Harum Sekali!', ['Mang', 'ga'])" class="bg-yellow-50 border-3 border-yellow-400 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🥭</div>
+              <h4 class="font-black text-xs text-slate-800">Mangga</h4>
+              <span class="text-[9px] text-yellow-700 font-bold bg-white px-2 py-0.5 rounded-full mt-1">Kuning Harum</span>
+            </div>
+
+            <!-- Nanas (BARU) -->
+            <div onclick="handleFruitTap('Nanas', 'Kuning Bersisik', '🍍', 'Manis Asam Segar!', ['Na', 'nas'])" class="bg-amber-50 border-3 border-yellow-500 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🍍</div>
+              <h4 class="font-black text-xs text-slate-800">Nanas</h4>
+              <span class="text-[9px] text-amber-700 font-bold bg-white px-2 py-0.5 rounded-full mt-1">Kuning Bersisik</span>
+            </div>
+
+            <!-- Pepaya (BARU) -->
+            <div onclick="handleFruitTap('Pepaya', 'Jingga', '🍈', 'Manis dan Baik untuk Perut!', ['Pe', 'pa', 'ya'])" class="bg-orange-50 border-3 border-amber-400 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🍈</div>
+              <h4 class="font-black text-xs text-slate-800">Pepaya</h4>
+              <span class="text-[9px] text-orange-700 font-bold bg-white px-2 py-0.5 rounded-full mt-1">Jingga Manis</span>
+            </div>
+
+            <!-- Alpukat (BARU) -->
+            <div onclick="handleFruitTap('Alpukat', 'Hijau Krim', '🥑', 'Lembut Bergizi Tinggi!', ['Al', 'pu', 'kat'])" class="bg-emerald-50 border-3 border-green-500 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🥑</div>
+              <h4 class="font-black text-xs text-slate-800">Alpukat</h4>
+              <span class="text-[9px] text-emerald-700 font-bold bg-white px-2 py-0.5 rounded-full mt-1">Hijau Lembut</span>
+            </div>
+
+            <!-- Ceri Manis (BARU) -->
+            <div onclick="handleFruitTap('Ceri', 'Merah Merona', '🍒', 'Kecil Manis Lucu!', ['Ce', 'ri'])" class="bg-rose-50 border-3 border-rose-500 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🍒</div>
+              <h4 class="font-black text-xs text-slate-800">Ceri</h4>
+              <span class="text-[9px] text-rose-700 font-bold bg-white px-2 py-0.5 rounded-full mt-1">Merah Ceria</span>
+            </div>
+
+            <!-- Melon (BARU) -->
+            <div onclick="handleFruitTap('Melon', 'Hijau Muda', '🍈', 'Wangi dan Dingin Manis!', ['Me', 'lon'])" class="bg-teal-50 border-3 border-teal-400 rounded-2xl p-2.5 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+              <div class="text-4xl mb-1 bounce-card">🍈</div>
+              <h4 class="font-black text-xs text-slate-800">Melon</h4>
+              <span class="text-[9px] text-teal-700 font-bold bg-white px-2 py-0.5 rounded-full mt-1">Hijau Segar</span>
+            </div>
+          </div>
+        </div>
+      `,
+
+      // MODUL MEMBACA, ALFABET A-Z & EJAAN SUKU KATA PERLAHAN
+      reading: `
+        <div class="flex-1 flex flex-col">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center space-x-2">
+              <button onclick="switchView('learn_hub')" class="p-1.5 bg-white rounded-xl border border-purple-300 text-xs active-press">⬅️</button>
+              <div>
+                <h2 class="text-base font-black text-purple-900">Belajar Membaca & Alfabet 🔤</h2>
+                <p class="text-[11px] text-purple-700">Pelafalan pelan & eja suku kata</p>
+              </div>
+            </div>
+            <button onclick="playRewardJingle()" class="px-2.5 py-1 bg-yellow-400 rounded-full font-bold text-xs shadow active-press">⭐</button>
+          </div>
+
+          <!-- Tab Pilihan: Huruf Vokal / Alfabet / Suku Kata -->
+          <div class="flex space-x-1.5 mb-2.5">
+            <button onclick="renderReadingSubTab('vowels')" id="tab-vowels" class="flex-1 py-1 rounded-xl bg-purple-500 text-white font-extrabold text-xs shadow-sm">Vokal</button>
+            <button onclick="renderReadingSubTab('words')" id="tab-words" class="flex-1 py-1 rounded-xl bg-purple-100 text-purple-700 font-extrabold text-xs">Kata Dasar</button>
+            <button onclick="renderReadingSubTab('alphabet')" id="tab-alphabet" class="flex-1 py-1 rounded-xl bg-purple-100 text-purple-700 font-extrabold text-xs">A - Z</button>
+          </div>
+
+          <!-- Container Sub-Tab Membaca -->
+          <div id="readingSubContainer" class="flex-1 flex flex-col">
+            <!-- Default loaded in JS -->
+          </div>
+        </div>
+      `,
+
+      // STUDIO IKUTI SUARA (Voice Mimic)
+      mimic: `
+        <div class="flex-1 flex flex-col justify-between py-2 text-center">
+          <div>
+            <h2 class="text-xl font-black text-amber-800">Studio Ikuti Suara 🎙️</h2>
+            <p class="text-xs text-amber-700">Tekan tombol mikrofon, lalu bicara yuk!</p>
+          </div>
+
+          <div class="my-auto flex flex-col items-center">
+            <button id="recordBtn" onclick="toggleVoiceRecord()" class="w-28 h-28 rounded-full bg-amber-500 text-white flex items-center justify-center text-5xl shadow-2xl border-4 border-white transition active-press">
+              🎤
+            </button>
+            <p id="recordStatus" class="font-extrabold text-sm text-slate-700 mt-4">Tekan untuk Bicara</p>
+
+            <!-- Tombol Playback Suara Lucu -->
+            <div id="playRecordedBtn" class="hidden mt-6 flex flex-col space-y-2 w-full max-w-xs">
+              <button onclick="playRecordedVoice(1.0)" class="w-full py-2.5 bg-emerald-500 text-white font-black rounded-2xl shadow active-press text-sm">
+                ▶️ Dengar Suaraku
+              </button>
+              <button onclick="playRecordedVoice(1.35)" class="w-full py-2.5 bg-pink-500 text-white font-black rounded-2xl shadow active-press text-sm">
+                🐰 Suara Kelinci Lucu (Cepat)
+              </button>
+            </div>
+          </div>
+
+          <p class="text-[11px] text-slate-500 font-semibold bg-white/70 py-1.5 rounded-xl">Suara disimpan lokal di HP kamu, aman tanpa kuota!</p>
+        </div>
+      `,
+
+      // VIDEO INTERAKTIF (CANVAS OFFLINE ANIMATION LEBIH BANYAK FITUR)
+      video: `
+        <div class="flex-1 flex flex-col">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <h2 class="text-base font-black text-pink-900">Kartun Interaktif 🎬</h2>
+              <p class="text-[11px] text-pink-700">Sentuh layar untuk suara & aksi seru!</p>
+            </div>
+            <button onclick="resetInteractiveVideo()" class="px-2.5 py-1 bg-pink-200 text-pink-800 rounded-xl font-bold text-xs active-press">Ulang 🔄</button>
+          </div>
+
+          <!-- The Interactive HTML5 Canvas "Video" -->
+          <div class="relative w-full aspect-[4/3] bg-sky-200 rounded-3xl overflow-hidden border-4 border-pink-400 shadow-lg">
+            <canvas id="interactiveCanvas" class="w-full h-full block cursor-pointer"></canvas>
+            <div class="absolute bottom-2 left-3 right-3 flex justify-between pointer-events-none">
+              <span class="bg-black/50 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">Tekan layar untuk kejutan! ✨</span>
+              <span id="canvasScore" class="bg-amber-400 text-slate-900 text-[10px] px-2 py-0.5 rounded-full font-black">Bintang: 0 ⭐</span>
+            </div>
+          </div>
+
+          <!-- Kontrol Suasana Video (Lebih Banyak Pilihan Interaksi!) -->
+          <div class="grid grid-cols-3 gap-2 mt-2.5">
+            <button onclick="toggleDayNight()" class="bg-indigo-100 border-2 border-indigo-400 rounded-2xl p-2 text-[11px] font-black text-indigo-900 active-press">
+              🌙 Malam/Siang
+            </button>
+            <button onclick="triggerRainbow()" class="bg-pink-100 border-2 border-pink-400 rounded-2xl p-2 text-[11px] font-black text-pink-900 active-press">
+              🌈 Pelangi
+            </button>
+            <button onclick="triggerRain()" class="bg-sky-100 border-2 border-sky-400 rounded-2xl p-2 text-[11px] font-black text-sky-900 active-press">
+              🌧️ Hujan Tik Tik
+            </button>
+            <button onclick="boostCar()" class="bg-amber-100 border-2 border-amber-400 rounded-2xl p-2 text-[11px] font-black text-amber-900 active-press">
+              🏎️ Laju Cepat
+            </button>
+            <button onclick="spawnFireworks()" class="bg-rose-100 border-2 border-rose-400 rounded-2xl p-2 text-[11px] font-black text-rose-900 active-press">
+              🎆 Kembang Api
+            </button>
+            <button onclick="spawnHotAirBalloon()" class="bg-purple-100 border-2 border-purple-400 rounded-2xl p-2 text-[11px] font-black text-purple-900 active-press">
+              🎈 Balon Udara
+            </button>
+          </div>
+        </div>
+      `,
+
+      // ANGKA & BALON
+      numbers: `
+        <div class="flex-1 flex flex-col">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center space-x-2">
+              <button onclick="switchView('home')" class="p-1.5 bg-white rounded-xl border border-amber-300 text-xs active-press">⬅️</button>
+              <div>
+                <h2 class="text-base font-black text-amber-900">Ayo Berhitung Balon 1 - 10 🔢</h2>
+                <p class="text-[11px] text-amber-700">Dengar sebutan angka pelan & jelas</p>
+              </div>
+            </div>
+            <button onclick="playRewardJingle()" class="px-2.5 py-1 bg-yellow-400 rounded-full font-bold text-xs shadow active-press">⭐</button>
+          </div>
+
+          <!-- Papan Display Angka Besar -->
+          <div id="numberDisplayCard" class="bg-white border-4 border-amber-300 rounded-3xl p-3 text-center shadow-md mb-2 flex items-center justify-around">
+            <div id="numberDisplayVal" class="text-5xl font-black text-amber-500 font-num">1</div>
+            <div>
+              <h3 id="numberDisplayText" class="text-lg font-black text-slate-800">Satu</h3>
+              <p id="numberDisplayObjects" class="text-2xl mt-0.5">🎈</p>
+            </div>
+            <button onclick="playCountTone(currentCountNumber); spellSyllables(['Sa', 'tu'], 'Satu')" class="px-3 py-1.5 bg-amber-400 text-white rounded-xl font-black text-xs active-press">
+              🔊 Dengar
+            </button>
+          </div>
+
+          <!-- Barisan Tombol 1 - 10 -->
+          <div class="grid grid-cols-5 gap-2 flex-1 pb-2">
+            ${[1,2,3,4,5,6,7,8,9,10].map(n => `
+              <button onclick="handleNumberTap(${n})" class="bg-white border-3 border-amber-400 rounded-2xl font-black text-xl text-amber-600 shadow-sm active-press flex flex-col items-center justify-center aspect-square font-num">
+                <span>${n}</span>
+                <span class="text-[10px]">🎈</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `
+    };
+
+    /* =========================================================================
+       5. VIEW NAVIGATION & EVENT HANDLERS
+       ========================================================================= */
+    let currentActiveWord = { letter: 'A', word: 'Apel', emoji: '🍎', syllables: ['A', 'pel'] };
+    let currentCountNumber = 1;
+
+    const numberWords = [
+      "", "Satu", "Dua", "Tiga", "Empat", "Lima",
+      "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh"
+    ];
+
+    const numberSyllables = [
+      [], ["Sa", "tu"], ["Du", "a"], ["Ti", "ga"], ["Em", "pat"], ["Li", "ma"],
+      ["E", "nam"], ["Tu", "juh"], ["De", "la", "pan"], ["Sem", "bi", "lan"], ["Se", "pu", "luh"]
+    ];
+
+    function handleFruitTap(name, color, emoji, taste, syllables = []) {
+      playTone(587.33, 'triangle', 0.18, 0.3); // Nada D5
+      showToast(`${emoji} ${name}: ${taste}`);
+      if (syllables.length > 0) {
+        spellSyllables(syllables, `${name}, warna ${color}`);
+      } else {
+        speakWord(`${name}... Warna ${color}`);
+      }
+    }
+
+    function handleNumberTap(num) {
+      currentCountNumber = num;
+      const numVal = document.getElementById('numberDisplayVal');
+      const numText = document.getElementById('numberDisplayText');
+      const numObjects = document.getElementById('numberDisplayObjects');
+
+      if (numVal) numVal.innerText = num;
+      if (numText) numText.innerText = numberWords[num];
+      if (numObjects) numObjects.innerText = '🎈'.repeat(num);
+
+      playCountTone(num);
+      spellSyllables(numberSyllables[num], numberWords[num]);
+    }
+
+    function playCountTone(num) {
+      const baseFreq = 261.63; // C4
+      const freq = baseFreq * Math.pow(1.08, num);
+      playTone(freq, 'sine', 0.25, 0.3);
+    }
+
+    function switchView(viewName) {
+      playTone(480, 'sine', 0.08, 0.15);
+      const appContent = document.getElementById('appContent');
+
+      // Dynamic generator for animals and vehicles to support stage-card architecture
+      if (viewName === 'animals') {
+        appContent.innerHTML = getAnimalsViewHtml();
+      } else if (viewName === 'vehicles') {
+        appContent.innerHTML = getVehiclesViewHtml();
+      } else {
+        appContent.innerHTML = views[viewName] || views.home;
+      }
+
+      // Update Navigation Styles
+      document.querySelectorAll('.nav-item').forEach(el => {
+        el.classList.remove('text-amber-500');
+        el.classList.add('text-slate-500');
+      });
+
+      // Highlight corresponding bottom navigation tab
+      let activeTabId = `nav-${viewName}`;
+      if (['animals', 'vehicles', 'fruits', 'numbers'].includes(viewName)) {
+        activeTabId = 'nav-learn_hub';
+      }
+      const currentNav = document.getElementById(activeTabId);
+      if (currentNav) {
+        currentNav.classList.add('text-amber-500');
+        currentNav.classList.remove('text-slate-500');
+      }
+
+      // Initial sub-tab jika membuka reading
+      if (viewName === 'reading') {
+        renderReadingSubTab('vowels');
+      }
+
+      // Inisialisasi Canvas jika masuk menu video
+      if (viewName === 'video') {
+        setTimeout(initInteractiveVideo, 100);
+      } else {
+        stopInteractiveVideo();
+      }
+    }
+
+    function handleAnimalTap(type, name, soundText, syllables = []) {
+      playAnimalSound(type);
+      showToast(`${name}: ${soundText}`);
+      setTimeout(() => {
+        if (syllables.length > 0) {
+          spellSyllables(syllables, name);
+        } else {
+          speakWord(name);
+        }
+      }, 700);
+    }
+
+    function handleVehicleTap(type, name, soundText, syllables = []) {
+      playVehicleSound(type);
+      showToast(`${name}: ${soundText}`);
+      setTimeout(() => {
+        if (syllables.length > 0) {
+          spellSyllables(syllables, name);
+        } else {
+          speakWord(name);
+        }
+      }, 750);
+    }
+
+    /* =========================================================================
+       SUB-TABS MODUL MEMBACA (VOKAL, KATA DASAR & ALFABET LENGKAP A-Z)
+       ========================================================================= */
+    const phonicsData = {
+      'A': { word: 'Apel', emoji: '🍎', desc: 'A... Apel Manis', syl: ['A', 'pel'] },
+      'I': { word: 'Ikan', emoji: '🐟', desc: 'I... Ikan Berenang', syl: ['I', 'kan'] },
+      'U': { word: 'Udang', emoji: '🦐', desc: 'U... Udang Laut', syl: ['U', 'dang'] },
+      'E': { word: 'Elang', emoji: '🦅', desc: 'E... Burung Elang', syl: ['E', 'lang'] },
+      'O': { word: 'Obat', emoji: '💊', desc: 'O... Obat Sehat', syl: ['O', 'bat'] }
+    };
+
+    const basicWordsList = [
+      { word: 'BOLA', syl: ['Bo', 'la'], emoji: '⚽', color: 'border-blue-400 text-blue-600' },
+      { word: 'BUKU', syl: ['Bu', 'ku'], emoji: '📚', color: 'border-emerald-400 text-emerald-600' },
+      { word: 'MAMA', syl: ['Ma', 'ma'], emoji: '👩', color: 'border-pink-400 text-pink-600' },
+      { word: 'PAPA', syl: ['Pa', 'pa'], emoji: '👨', color: 'border-indigo-400 text-indigo-600' },
+      { word: 'SUSU', syl: ['Su', 'su'], emoji: '🥛', color: 'border-amber-400 text-amber-600' },
+      { word: 'ROTI', syl: ['Ro', 'ti'], emoji: '🍞', color: 'border-orange-400 text-orange-600' },
+      { word: 'TOPI', syl: ['To', 'pi'], emoji: '🧢', color: 'border-teal-400 text-teal-600' },
+      { word: 'MEJA', syl: ['Me', 'ja'], emoji: '🪑', color: 'border-purple-400 text-purple-600' }
+    ];
+
+    function renderReadingSubTab(tab) {
+      const container = document.getElementById('readingSubContainer');
+      const tabVowels = document.getElementById('tab-vowels');
+      const tabWords = document.getElementById('tab-words');
+      const tabAlpha = document.getElementById('tab-alphabet');
+
+      [tabVowels, tabWords, tabAlpha].forEach(btn => {
+        if (!btn) return;
+        btn.classList.remove('bg-purple-500', 'text-white');
+        btn.classList.add('bg-purple-100', 'text-purple-700');
+      });
+
+      if (tab === 'vowels') {
+        tabVowels.classList.add('bg-purple-500', 'text-white');
+        tabVowels.classList.remove('bg-purple-100', 'text-purple-700');
+        container.innerHTML = `
+          <!-- Kartu Huruf Besar -->
+          <div class="grid grid-cols-5 gap-2 mb-3">
+            <button onclick="handlePhonicTap('A')" class="aspect-square bg-white border-4 border-red-400 rounded-2xl font-black text-2xl text-red-500 shadow-md active-press">A</button>
+            <button onclick="handlePhonicTap('I')" class="aspect-square bg-white border-4 border-blue-400 rounded-2xl font-black text-2xl text-blue-500 shadow-md active-press">I</button>
+            <button onclick="handlePhonicTap('U')" class="aspect-square bg-white border-4 border-green-400 rounded-2xl font-black text-2xl text-green-500 shadow-md active-press">U</button>
+            <button onclick="handlePhonicTap('E')" class="aspect-square bg-white border-4 border-yellow-400 rounded-2xl font-black text-2xl text-yellow-500 shadow-md active-press">E</button>
+            <button onclick="handlePhonicTap('O')" class="aspect-square bg-white border-4 border-purple-400 rounded-2xl font-black text-2xl text-purple-500 shadow-md active-press">O</button>
+          </div>
+
+          <!-- Display Kata Aktif -->
+          <div id="wordDisplayBox" class="flex-1 bg-white border-4 border-purple-300 rounded-3xl p-4 flex flex-col items-center justify-center text-center shadow-lg">
+            <span id="readingEmoji" class="text-6xl mb-2 bounce-card">🍎</span>
+            <h3 id="readingLetter" class="text-2xl font-black text-purple-600">A - Apel</h3>
+            <p id="readingDetail" class="text-xs text-slate-500 font-bold mt-1">Ejaan: "A... pel... Apel!"</p>
+
+            <button onclick="repeatCurrentWord()" class="mt-4 px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white font-extrabold text-xs rounded-2xl shadow active-press flex items-center space-x-2">
+              <span>🔊</span>
+              <span>Eja Lagi Perlahan</span>
+            </button>
+          </div>
+        `;
+      } else if (tab === 'words') {
+        tabWords.classList.add('bg-purple-500', 'text-white');
+        tabWords.classList.remove('bg-purple-100', 'text-purple-700');
+        container.innerHTML = `
+          <div class="grid grid-cols-2 gap-2.5 flex-1 overflow-y-auto pb-3 pr-1">
+            ${basicWordsList.map(item => `
+              <div onclick="handleBasicWordTap('${item.word}', ${JSON.stringify(item.syl)})" class="bg-white border-3 ${item.color} rounded-2xl p-3 flex flex-col items-center justify-center shadow-sm active-press cursor-pointer">
+                <span class="text-4xl mb-1 bounce-card">${item.emoji}</span>
+                <h4 class="font-black text-base">${item.word}</h4>
+                <span class="text-[10px] bg-slate-100 text-slate-600 font-bold px-2 py-0.5 rounded-full mt-1">${item.syl.join(' - ')}</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else if (tab === 'alphabet') {
+        tabAlpha.classList.add('bg-purple-500', 'text-white');
+        tabAlpha.classList.remove('bg-purple-100', 'text-purple-700');
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+        container.innerHTML = `
+          <div class="grid grid-cols-6 gap-2 flex-1 overflow-y-auto pb-3 pr-1">
+            ${alphabet.map(letter => `
+              <button onclick="handleSingleLetterTap('${letter}')" class="aspect-square bg-white border-3 border-purple-400 rounded-2xl font-black text-lg text-purple-700 shadow-sm active-press flex items-center justify-center">
+                ${letter}
+              </button>
+            `).join('')}
+          </div>
+        `;
+      }
+    }
+
+    function handleBasicWordTap(word, syllables) {
+      playTone(520, 'sine', 0.15);
+      showToast(`Membaca: ${word}`);
+      spellSyllables(syllables, word);
+    }
+
+    function handleSingleLetterTap(letter) {
+      playTone(460, 'sine', 0.12);
+      speakWord(`Huruf... ${letter}`, 0.58);
+      showToast(`Huruf: ${letter}`);
+    }
+
+    function handlePhonicTap(letter) {
+      const data = phonicsData[letter];
+      currentActiveWord = { letter, word: data.word, emoji: data.emoji, syllables: data.syl };
+      
+      const emojiEl = document.getElementById('readingEmoji');
+      const letterEl = document.getElementById('readingLetter');
+      const detailEl = document.getElementById('readingDetail');
+
+      if (emojiEl) emojiEl.innerText = data.emoji;
+      if (letterEl) letterEl.innerText = `${letter} - ${data.word}`;
+      if (detailEl) detailEl.innerText = `Ejaan: "${data.syl.join('... ')}... ${data.word}!"`;
+
+      playTone(520, 'sine', 0.15);
+      spellSyllables(data.syl, `${letter}... ${data.word}`);
+    }
+
+    function repeatCurrentWord() {
+      spellSyllables(currentActiveWord.syllables, currentActiveWord.word);
+    }
+
+    /* =========================================================================
+       6. INTERACTIVE OFFLINE CANVAS VIDEO ENGINE (BANYAK FITUR BARU)
+       ========================================================================= */
+    let canvasAnimationId = null;
+    let canvasState = {
+      sunY: 45,
+      carX: -80,
+      carSpeed: 2,
+      isNight: false,
+      isRaining: false,
+      hasRainbow: false,
+      starsCollected: 0,
+      balloonY: -100,
+      balloonX: 120,
+      raindrops: [],
+      particles: [],
+      birds: []
+    };
+
+    function initInteractiveVideo() {
+      const canvas = document.getElementById('interactiveCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      // Set internal resolution
+      canvas.width = canvas.parentElement.clientWidth * window.devicePixelRatio;
+      canvas.height = canvas.parentElement.clientHeight * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+      const renderWidth = canvas.parentElement.clientWidth;
+      const renderHeight = canvas.parentElement.clientHeight;
+
+      // Inisialisasi Tetes Hujan
+      canvasState.raindrops = [];
+      for (let i = 0; i < 40; i++) {
+        canvasState.raindrops.push({
+          x: Math.random() * renderWidth,
+          y: Math.random() * renderHeight,
+          speed: 4 + Math.random() * 4
+        });
+      }
+
+      // Event Sentuhan Canvas Langsung
+      canvas.onclick = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const touchX = e.clientX - rect.left;
+        const touchY = e.clientY - rect.top;
+
+        // Sentuh area matahari / bulan
+        if (touchX < 80 && touchY < 80) {
+          playTone(880, 'sine', 0.2);
+          canvasState.sunY = 30;
+          setTimeout(() => canvasState.sunY = 45, 300);
+          addCanvasStars(touchX, touchY);
+          speakWord(canvasState.isNight ? "Bulan Malam Indah!" : "Matahari Ceria!");
+        } 
+        // Sentuh mobil
+        else if (touchY > renderHeight - 90 && touchY < renderHeight - 20) {
+          playVehicleSound('car');
+          boostCar();
+          addCanvasStars(touchX, touchY);
+        } else {
+          playTone(660, 'triangle', 0.15);
+          addCanvasStars(touchX, touchY);
+        }
+      };
+
+      function drawScene() {
+        ctx.clearRect(0, 0, renderWidth, renderHeight);
+
+        // Langit (Siang, Hujan, atau Malam)
+        if (canvasState.isNight) {
+          ctx.fillStyle = '#0F172A'; // Langit malam pekat
+        } else if (canvasState.isRaining) {
+          ctx.fillStyle = '#94A3B8'; // Langit kelabu mendung
+        } else {
+          ctx.fillStyle = '#7DD3FC'; // Langit biru cerah
+        }
+        ctx.fillRect(0, 0, renderWidth, renderHeight);
+
+        // Bintang malam kelap-kelip jika malam hari
+        if (canvasState.isNight) {
+          ctx.fillStyle = '#FDE047';
+          for (let i = 0; i < 20; i++) {
+            const bx = (i * 37) % renderWidth;
+            const by = (i * 23) % (renderHeight / 2);
+            ctx.fillRect(bx, by, 2, 2);
+          }
+        }
+
+        // Pelangi jika aktif
+        if (canvasState.hasRainbow) {
+          const colors = ['#EF4444', '#F97316', '#FBBF24', '#10B981', '#3B82F6', '#8B5CF6'];
+          colors.forEach((c, idx) => {
+            ctx.beginPath();
+            ctx.arc(renderWidth / 2, renderHeight - 30, 110 - idx * 6, Math.PI, 0);
+            ctx.strokeStyle = c;
+            ctx.lineWidth = 5;
+            ctx.stroke();
+          });
+        }
+
+        // Matahari (Siang) atau Bulan Sabit (Malam)
+        if (canvasState.isNight) {
+          // Bulan Sabit
+          ctx.beginPath();
+          ctx.arc(45, canvasState.sunY, 22, 0, Math.PI * 2);
+          ctx.fillStyle = '#FDE047';
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(52, canvasState.sunY - 4, 18, 0, Math.PI * 2);
+          ctx.fillStyle = '#0F172A';
+          ctx.fill();
+        } else {
+          // Matahari Kartun Tersenyum
+          ctx.beginPath();
+          ctx.arc(45, canvasState.sunY, 26, 0, Math.PI * 2);
+          ctx.fillStyle = '#FBBF24';
+          ctx.fill();
+          ctx.lineWidth = 4;
+          ctx.strokeStyle = '#F59E0B';
+          ctx.stroke();
+          ctx.fillStyle = '#78350F';
+          ctx.beginPath();
+          ctx.arc(38, canvasState.sunY - 4, 3, 0, Math.PI * 2);
+          ctx.arc(52, canvasState.sunY - 4, 3, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(45, canvasState.sunY + 4, 8, 0, Math.PI);
+          ctx.stroke();
+        }
+
+        // Balon Udara jika terbang
+        if (canvasState.balloonY > -80 && canvasState.balloonY < renderHeight + 60) {
+          canvasState.balloonY += 0.8;
+          ctx.fillStyle = '#EC4899';
+          ctx.beginPath();
+          ctx.arc(canvasState.balloonX, canvasState.balloonY, 20, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#831843';
+          ctx.fillRect(canvasState.balloonX - 5, canvasState.balloonY + 24, 10, 8);
+        }
+
+        // Bukit Rumput
+        ctx.beginPath();
+        ctx.ellipse(renderWidth * 0.3, renderHeight - 20, renderWidth * 0.6, 60, 0, 0, Math.PI * 2);
+        ctx.fillStyle = canvasState.isNight ? '#1E3A1E' : '#4ADE80';
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.ellipse(renderWidth * 0.8, renderHeight - 15, renderWidth * 0.5, 50, 0, 0, Math.PI * 2);
+        ctx.fillStyle = canvasState.isNight ? '#142E14' : '#22C55E';
+        ctx.fill();
+
+        // Kucing Ceria di Pinggir Jalan
+        ctx.font = '24px serif';
+        ctx.fillText('🐱', renderWidth * 0.82, renderHeight - 50);
+
+        // Jalan Raya
+        ctx.fillStyle = '#475569';
+        ctx.fillRect(0, renderHeight - 45, renderWidth, 45);
+        ctx.fillStyle = '#F8FAFC';
+        for (let x = 10; x < renderWidth; x += 40) {
+          ctx.fillRect(x, renderHeight - 24, 20, 4);
+        }
+
+        // Hujan jika aktif
+        if (canvasState.isRaining) {
+          ctx.strokeStyle = '#E0F2FE';
+          ctx.lineWidth = 2;
+          canvasState.raindrops.forEach(drop => {
+            ctx.beginPath();
+            ctx.moveTo(drop.x, drop.y);
+            ctx.lineTo(drop.x - 2, drop.y + 10);
+            ctx.stroke();
+            drop.y += drop.speed;
+            if (drop.y > renderHeight) drop.y = -10;
+          });
+        }
+
+        // Mobil Kartun Bergerak
+        canvasState.carX += canvasState.carSpeed;
+        if (canvasState.carX > renderWidth + 40) {
+          canvasState.carX = -70;
+        }
+
+        const cx = canvasState.carX;
+        const cy = renderHeight - 50;
+
+        // Badan Mobil
+        ctx.fillStyle = '#EF4444';
+        ctx.beginPath();
+        ctx.roundRect(cx, cy, 60, 24, 8);
+        ctx.fill();
+
+        // Kabin Mobil
+        ctx.fillStyle = '#F87171';
+        ctx.beginPath();
+        ctx.roundRect(cx + 12, cy - 14, 34, 16, 5);
+        ctx.fill();
+
+        // Kaca
+        ctx.fillStyle = '#E0F2FE';
+        ctx.fillRect(cx + 16, cy - 10, 12, 10);
+        ctx.fillRect(cx + 30, cy - 10, 12, 10);
+
+        // Lampu depan mobil saat malam
+        if (canvasState.isNight) {
+          ctx.fillStyle = 'rgba(253, 224, 71, 0.45)';
+          ctx.beginPath();
+          ctx.moveTo(cx + 60, cy + 8);
+          ctx.lineTo(cx + 120, cy - 5);
+          ctx.lineTo(cx + 120, cy + 25);
+          ctx.closePath();
+          ctx.fill();
+        }
+
+        // Roda
+        ctx.fillStyle = '#1E293B';
+        ctx.beginPath();
+        ctx.arc(cx + 14, cy + 24, 8, 0, Math.PI * 2);
+        ctx.arc(cx + 46, cy + 24, 8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#CBD5E1';
+        ctx.beginPath();
+        ctx.arc(cx + 14, cy + 24, 3, 0, Math.PI * 2);
+        ctx.arc(cx + 46, cy + 24, 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Partikel Kembang Api & Sentuhan
+        for (let i = canvasState.particles.length - 1; i >= 0; i--) {
+          const p = canvasState.particles[i];
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+          p.x += p.vx;
+          p.y += p.vy;
+          p.size *= 0.94;
+          if (p.size < 0.5) canvasState.particles.splice(i, 1);
+        }
+
+        canvasAnimationId = requestAnimationFrame(drawScene);
+      }
+
+      drawScene();
+    }
+
+    function stopInteractiveVideo() {
+      if (canvasAnimationId) {
+        cancelAnimationFrame(canvasAnimationId);
+        canvasAnimationId = null;
+      }
+    }
+
+    function toggleDayNight() {
+      canvasState.isNight = !canvasState.isNight;
+      playTone(canvasState.isNight ? 280 : 620, 'sine', 0.25);
+      speakWord(canvasState.isNight ? "Malam hari yang tenang..." : "Siang hari yang ceria!");
+    }
+
+    function triggerRain() {
+      canvasState.isRaining = !canvasState.isRaining;
+      if (canvasState.isRaining) {
+        playTone(300, 'sawtooth', 0.4);
+        speakWord("Hujan turun, tik tik tik!");
+      }
+    }
+
+    function triggerRainbow() {
+      canvasState.hasRainbow = !canvasState.hasRainbow;
+      if (canvasState.hasRainbow) {
+        playRewardJingle();
+        speakWord("Pelangi indah muncul!");
+      }
+    }
+
+    function boostCar() {
+      canvasState.carSpeed = 6;
+      playVehicleSound('car');
+      setTimeout(() => canvasState.carSpeed = 2, 2200);
+    }
+
+    function spawnFireworks() {
+      playRewardJingle();
+      speakWord("Wah, kembang api meriah!");
+      const colors = ['#EF4444', '#F59E0B', '#10B981', '#3B82F6', '#EC4899', '#8B5CF6'];
+      for (let i = 0; i < 35; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 2 + Math.random() * 5;
+        canvasState.particles.push({
+          x: 180,
+          y: 80,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          size: 6 + Math.random() * 6,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
+    }
+
+    function spawnHotAirBalloon() {
+      playTone(550, 'sine', 0.2);
+      speakWord("Balon udara terbang!");
+      canvasState.balloonY = -20;
+    }
+
+    function addCanvasStars(x, y) {
+      canvasState.starsCollected += 1;
+      const scoreBadge = document.getElementById('canvasScore');
+      if (scoreBadge) scoreBadge.innerText = `Bintang: ${canvasState.starsCollected} ⭐`;
+
+      const colors = ['#FBBF24', '#F472B6', '#60A5FA', '#34D399'];
+      for (let i = 0; i < 10; i++) {
+        canvasState.particles.push({
+          x: x,
+          y: y,
+          vx: (Math.random() - 0.5) * 5,
+          vy: (Math.random() - 0.5) * 5,
+          size: 6 + Math.random() * 4,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
+    }
+
+    function resetInteractiveVideo() {
+      canvasState.carX = -70;
+      canvasState.carSpeed = 2;
+      canvasState.isNight = false;
+      canvasState.isRaining = false;
+      canvasState.hasRainbow = false;
+      canvasState.balloonY = -100;
+      canvasState.particles = [];
+      playTone(400, 'sine', 0.2);
+    }
+
+    // Initialize Default View
+    window.onload = () => {
+      switchView('home');
+    };
+  </script>
+</body>
+</html>
