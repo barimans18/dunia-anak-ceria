@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/services/sound_engine.dart';
 import '../../../shared/widgets/bouncy_card.dart';
@@ -171,6 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: 'Pusat Belajar',
                     subtitle: 'Hewan, Mobil, Buah, Huruf',
                     emoji: '🎒',
+                    svgAsset: 'assets/icons/app_icon.svg',
                     borderColor: AppColors.emeraldGreen,
                     gradient: AppColors.cardGreenGradient,
                     onTap: () => _switchView('learn_hub'),
@@ -187,6 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: 'Belajar Membaca',
                     subtitle: 'Eja Kata Perlahan',
                     emoji: '🔤',
+                    svgAsset: 'assets/icons/reading.svg',
                     borderColor: AppColors.playfulPurple,
                     gradient: AppColors.cardPurpleGradient,
                     onTap: () => _switchView('reading'),
@@ -278,6 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
     required String title,
     required String subtitle,
     required String emoji,
+    String? svgAsset,
     required Color borderColor,
     required LinearGradient gradient,
     required VoidCallback onTap,
@@ -315,7 +319,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               child: Center(
-                child: Text(emoji, style: const TextStyle(fontSize: 28)),
+                child: svgAsset != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(14),
+                        child: SvgPicture.asset(
+                          svgAsset,
+                          width: 38,
+                          height: 38,
+                          fit: BoxFit.contain,
+                        ),
+                      )
+                    : Text(emoji, style: const TextStyle(fontSize: 28)),
               ),
             ),
             const SizedBox(height: 8),
@@ -379,6 +393,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     subtitle: '16 Hewan & Suaranya',
                     badge: 'Buka 🐾',
                     emoji: '🦁',
+                    svgAsset: 'assets/icons/animals.svg',
                     borderColor: AppColors.emeraldGreen,
                     badgeColor: AppColors.emeraldGreen,
                     onTap: () => _switchView('animals'),
@@ -388,6 +403,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     subtitle: '12 Alat Transportasi',
                     badge: 'Buka 🚦',
                     emoji: '🚗',
+                    svgAsset: 'assets/icons/vehicles.svg',
                     borderColor: AppColors.primarySky,
                     badgeColor: AppColors.primarySky,
                     onTap: () => _switchView('vehicles'),
@@ -397,6 +413,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     subtitle: '12 Buah Segar',
                     badge: 'Buka 🍉',
                     emoji: '🍎',
+                    svgAsset: 'assets/icons/fruits.svg',
                     borderColor: AppColors.softPink,
                     badgeColor: AppColors.softPink,
                     onTap: () => _switchView('fruits'),
@@ -406,6 +423,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     subtitle: 'Alfabet & Suku Kata',
                     badge: 'Buka 📖',
                     emoji: '🔤',
+                    svgAsset: 'assets/icons/reading.svg',
                     borderColor: AppColors.playfulPurple,
                     badgeColor: AppColors.playfulPurple,
                     onTap: () => _switchView('reading'),
@@ -424,6 +442,7 @@ class _HomeScreenState extends State<HomeScreen> {
     required String subtitle,
     required String badge,
     required String emoji,
+    String? svgAsset,
     required Color borderColor,
     required Color badgeColor,
     required VoidCallback onTap,
@@ -447,7 +466,14 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(emoji, style: const TextStyle(fontSize: 48)),
+            svgAsset != null
+                ? SvgPicture.asset(
+                    svgAsset,
+                    width: 58,
+                    height: 58,
+                    fit: BoxFit.contain,
+                  )
+                : Text(emoji, style: const TextStyle(fontSize: 48)),
             const SizedBox(height: 8),
             Text(
               title,

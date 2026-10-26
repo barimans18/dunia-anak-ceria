@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/services/sound_engine.dart';
 
@@ -195,9 +196,24 @@ class _ParentalGateDialogState extends State<ParentalGateDialog> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text(
-          'Pengaturan Kiosk & Kontrol',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textDark),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: SvgPicture.asset(
+                'assets/icons/app_icon.svg',
+                width: 36,
+                height: 36,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(width: 8),
+            const Text(
+              'Pengaturan Kiosk',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textDark),
+            ),
+          ],
         ),
         const SizedBox(height: 16),
         ListTile(

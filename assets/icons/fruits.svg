@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <circle cx="50" cy="50" r="46" fill="#FCE7F3" />
+  <!-- Apple Stem -->
+  <path d="M50 34 Q53 25 60 21" stroke="#78350F" stroke-width="4" stroke-linecap="round" fill="none" />
+  <!-- Green Leaf -->
+  <path d="M54 27 Q68 22 70 29 Q62 35 54 27 Z" fill="#22C55E" />
+  <!-- Heart Shaped Apple -->
+  <path d="M50 41 C43 32 24 35 24 53 C24 67 43 78 50 82 C57 78 76 67 76 53 C76 35 57 32 50 41 Z" fill="#EF4444" />
+  <!-- Soft highlight -->
+  <ellipse cx="36" cy="47" rx="5" ry="7" fill="#F87171" opacity="0.6" transform="rotate(-20 36 47)" />
+</svg>

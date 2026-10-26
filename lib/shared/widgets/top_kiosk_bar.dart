@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../core/constants/app_colors.dart';
 import '../../features/parental_gate/widgets/parental_gate_dialog.dart';
 import 'bouncy_card.dart';
@@ -29,10 +30,10 @@ class TopKioskBar extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              width: 42,
-              height: 42,
+              width: 44,
+              height: 44,
               decoration: BoxDecoration(
-                color: AppColors.sunnyYellow,
+                color: Colors.white,
                 shape: BoxShape.circle,
                 border: Border.all(color: Colors.white, width: 2),
                 boxShadow: [
@@ -43,8 +44,13 @@ class TopKioskBar extends StatelessWidget {
                   ),
                 ],
               ),
-              child: const Center(
-                child: Text('⭐', style: TextStyle(fontSize: 20)),
+              child: ClipOval(
+                child: SvgPicture.asset(
+                  'assets/icons/app_icon.svg',
+                  width: 44,
+                  height: 44,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             const SizedBox(width: 10),

@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Dunia Anak Ceria (Debug)",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "Dunia Anak Ceria (Profile)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "Dunia Anak Ceria (Release)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release"
+    }
+  ]
+}

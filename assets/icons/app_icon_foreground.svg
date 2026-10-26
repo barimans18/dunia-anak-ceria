@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E2E8F0" />
+    </linearGradient>
+    <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047" />
+      <stop offset="100%" stop-color="#EAB308" />
+    </linearGradient>
+  </defs>
+
+  <!-- Karakter Beruang / Kucing Ceria Comel -->
+  <g transform="translate(136, 140)">
+    <ellipse cx="45" cy="40" rx="35" ry="40" fill="#F97316" />
+    <ellipse cx="45" cy="40" rx="20" ry="24" fill="#FED7AA" />
+    <ellipse cx="195" cy="40" rx="35" ry="40" fill="#F97316" />
+    <ellipse cx="195" cy="40" rx="20" ry="24" fill="#FED7AA" />
+
+    <ellipse cx="120" cy="130" rx="110" ry="95" fill="#FB923C" />
+    <ellipse cx="45" cy="155" rx="16" ry="10" fill="#FDA4AF" opacity="0.8" />
+    <ellipse cx="195" cy="155" rx="16" ry="10" fill="#FDA4AF" opacity="0.8" />
+
+    <ellipse cx="80" cy="120" rx="14" ry="18" fill="#1E293B" />
+    <circle cx="75" cy="112" r="5" fill="#FFFFFF" />
+    <circle cx="85" cy="125" r="2.5" fill="#FFFFFF" />
+
+    <ellipse cx="160" cy="120" rx="14" ry="18" fill="#1E293B" />
+    <circle cx="155" cy="112" r="5" fill="#FFFFFF" />
+    <circle cx="165" cy="125" r="2.5" fill="#FFFFFF" />
+
+    <ellipse cx="120" cy="150" rx="36" ry="26" fill="#FFF7ED" />
+    <polygon points="120,140 110,148 130,148" fill="#C2410C" />
+    <path d="M110 154 Q120 164 120 154 Q120 164 130 154" stroke="#C2410C" stroke-width="4" stroke-linecap="round" fill="none" />
+  </g>
+
+  <!-- Bintang Magik Hadapan -->
+  <polygon points="390,320 402,348 432,350 408,370 416,398 390,382 364,398 372,370 348,350 378,348" fill="url(#starGrad)" />
+</svg>
