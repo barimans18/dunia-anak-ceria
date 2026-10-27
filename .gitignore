@@ -43,3 +43,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Development, Brainstorming & Prototype Documents
+GEMINI_STORY_PROMPT.md
+PROTOTYPE.html
+FLUTTER_EXECUTION_BLUEPRINT.md

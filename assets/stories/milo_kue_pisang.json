@@ -1,0 +1,163 @@
+{
+  "id": "milo_kue_pisang",
+  "title": "Kue Pisang Milo yang Manis",
+  "theme": "Kebiasaan Baik & Empati",
+  "cover_image": "assets/images/stories/milo_kue_pisang/cover.webp",
+  "pages": [
+    {
+      "page_number": 1,
+      "image_path": "assets/images/stories/milo_kue_pisang/page_1.webp",
+      "audio_path": "assets/audio/stories/milo_kue_pisang/page_1.mp3",
+      "full_text": "Milo punya kue pisang yang sangat harum.",
+      "syllables": [
+        {"text": "Mi-lo", "start_ms": 0, "end_ms": 550},
+        {"text": "pu-nya", "start_ms": 620, "end_ms": 1100},
+        {"text": "ku-e", "start_ms": 1180, "end_ms": 1650},
+        {"text": "pi-sang", "start_ms": 1720, "end_ms": 2300},
+        {"text": "yang", "start_ms": 2380, "end_ms": 2700},
+        {"text": "sa-ngat", "start_ms": 2780, "end_ms": 3300},
+        {"text": "ha-rum.", "start_ms": 3380, "end_ms": 4050}
+      ],
+      "hotspots": [
+        {
+          "name": "Kue Pisang Harum",
+          "x_percent": 45.0,
+          "y_percent": 59.0,
+          "radius": 42.0,
+          "sfx_path": "assets/audio/sfx/steam_sparkle.wav"
+        },
+        {
+          "name": "Milo si Kucing",
+          "x_percent": 55.0,
+          "y_percent": 44.0,
+          "radius": 48.0,
+          "sfx_path": "assets/audio/sfx/cat_purr.wav"
+        }
+      ]
+    },
+    {
+      "page_number": 2,
+      "image_path": "assets/images/stories/milo_kue_pisang/page_2.webp",
+      "audio_path": "assets/audio/stories/milo_kue_pisang/page_2.mp3",
+      "full_text": "Milo memeluk kue dan tidak mau berbagi.",
+      "syllables": [
+        {"text": "Mi-lo", "start_ms": 0, "end_ms": 520},
+        {"text": "me-me-luk", "start_ms": 600, "end_ms": 1250},
+        {"text": "ku-e", "start_ms": 1320, "end_ms": 1750},
+        {"text": "dan", "start_ms": 1820, "end_ms": 2100},
+        {"text": "ti-dak", "start_ms": 2180, "end_ms": 2650},
+        {"text": "ma-u", "start_ms": 2720, "end_ms": 3150},
+        {"text": "ber-ba-gi.", "start_ms": 3220, "end_ms": 3950}
+      ],
+      "hotspots": [
+        {
+          "name": "Pelukan Milo",
+          "x_percent": 62.0,
+          "y_percent": 50.0,
+          "radius": 48.0,
+          "sfx_path": "assets/audio/sfx/pop.wav"
+        },
+        {
+          "name": "Kelinci Mengintip",
+          "x_percent": 25.0,
+          "y_percent": 43.0,
+          "radius": 40.0,
+          "sfx_path": "assets/audio/sfx/bunny_hop.wav"
+        }
+      ]
+    },
+    {
+      "page_number": 3,
+      "image_path": "assets/images/stories/milo_kue_pisang/page_3.webp",
+      "audio_path": "assets/audio/stories/milo_kue_pisang/page_3.mp3",
+      "full_text": "Kelinci putih datang dan merasa lapar sekali.",
+      "syllables": [
+        {"text": "Ke-lin-ci", "start_ms": 0, "end_ms": 680},
+        {"text": "pu-tih", "start_ms": 750, "end_ms": 1220},
+        {"text": "da-tang", "start_ms": 1300, "end_ms": 1800},
+        {"text": "dan", "start_ms": 1880, "end_ms": 2150},
+        {"text": "me-ra-sa", "start_ms": 2220, "end_ms": 2750},
+        {"text": "la-par", "start_ms": 2820, "end_ms": 3320},
+        {"text": "se-ka-li.", "start_ms": 3400, "end_ms": 4100}
+      ],
+      "hotspots": [
+        {
+          "name": "Kelinci Lapar",
+          "x_percent": 34.0,
+          "y_percent": 66.0,
+          "radius": 42.0,
+          "sfx_path": "assets/audio/sfx/tummy_growl.wav"
+        },
+        {
+          "name": "Mata Milo Peduli",
+          "x_percent": 63.0,
+          "y_percent": 44.0,
+          "radius": 42.0,
+          "sfx_path": "assets/audio/sfx/sparkle_heart.wav"
+        }
+      ]
+    },
+    {
+      "page_number": 4,
+      "image_path": "assets/images/stories/milo_kue_pisang/page_4.webp",
+      "audio_path": "assets/audio/stories/milo_kue_pisang/page_4.mp3",
+      "full_text": "Milo membagi kue pisang menjadi dua bagian.",
+      "syllables": [
+        {"text": "Mi-lo", "start_ms": 0, "end_ms": 500},
+        {"text": "mem-ba-gi", "start_ms": 580, "end_ms": 1200},
+        {"text": "ku-e", "start_ms": 1280, "end_ms": 1680},
+        {"text": "pi-sang", "start_ms": 1750, "end_ms": 2280},
+        {"text": "men-ja-di", "start_ms": 2350, "end_ms": 2900},
+        {"text": "du-a", "start_ms": 2980, "end_ms": 3380},
+        {"text": "ba-gi-an.", "start_ms": 3450, "end_ms": 4100}
+      ],
+      "hotspots": [
+        {
+          "name": "Kue Terbagi Dua",
+          "x_percent": 52.0,
+          "y_percent": 77.0,
+          "radius": 46.0,
+          "sfx_path": "assets/audio/sfx/snap_cookie.wav"
+        },
+        {
+          "name": "Kilau Berbagi",
+          "x_percent": 54.0,
+          "y_percent": 36.0,
+          "radius": 42.0,
+          "sfx_path": "assets/audio/sfx/sparkle_heart.wav"
+        }
+      ]
+    },
+    {
+      "page_number": 5,
+      "image_path": "assets/images/stories/milo_kue_pisang/page_5.webp",
+      "audio_path": "assets/audio/stories/milo_kue_pisang/page_5.mp3",
+      "full_text": "Makan bersama terasa sangat lezat dan menyenangkan!",
+      "syllables": [
+        {"text": "Ma-kan", "start_ms": 0, "end_ms": 520},
+        {"text": "ber-sa-ma", "start_ms": 600, "end_ms": 1220},
+        {"text": "te-ra-sa", "start_ms": 1300, "end_ms": 1780},
+        {"text": "sa-ngat", "start_ms": 1850, "end_ms": 2300},
+        {"text": "le-zat", "start_ms": 2380, "end_ms": 2850},
+        {"text": "dan", "start_ms": 2920, "end_ms": 3200},
+        {"text": "me-nye-nang-kan!", "start_ms": 3280, "end_ms": 4200}
+      ],
+      "hotspots": [
+        {
+          "name": "Kupu-kupu Menari",
+          "x_percent": 54.0,
+          "y_percent": 20.0,
+          "radius": 36.0,
+          "sfx_path": "assets/audio/sfx/pop.wav"
+        },
+        {
+          "name": "Tawa Sahabat",
+          "x_percent": 50.0,
+          "y_percent": 55.0,
+          "radius": 52.0,
+          "sfx_path": "assets/audio/sfx/cheer_laugh.wav"
+        }
+      ]
+    }
+  ]
+}
