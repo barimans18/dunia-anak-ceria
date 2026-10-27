@@ -54,6 +54,8 @@ flutter:
     - assets/audio/sfx/
     - assets/audio/animals/
     - assets/audio/vehicles/
+    - assets/audio/routines/
+    - assets/audio/emotions/
     - assets/images/animals/
     - assets/images/vehicles/
     - assets/images/fruits/

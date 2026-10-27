@@ -164,7 +164,8 @@ class AppData {
       soundText: 'Trompet Belalai!',
       emoji: '🐘',
       syllables: ['Ga', 'jah'],
-      description: 'Gajah bertubuh sangat besar dengan telinga lebar dan belalai.',
+      description:
+          'Gajah bertubuh sangat besar dengan telinga lebar dan belalai.',
       primaryColor: Color(0xFF6366F1),
       borderColor: Color(0xFF4F46E5),
       soundAsset: 'audio/animals/elephant.wav',
@@ -186,7 +187,8 @@ class AppData {
       soundText: 'Uu-aa-aa!',
       emoji: '🐵',
       syllables: ['Mon', 'yet'],
-      description: 'Monyet suka bergelantungan di dahan pohon dan makan pisang.',
+      description:
+          'Monyet suka bergelantungan di dahan pohon dan makan pisang.',
       primaryColor: Color(0xFFB45309),
       borderColor: Color(0xFF92400E),
       soundAsset: 'audio/animals/monkey.wav',
@@ -208,7 +210,8 @@ class AppData {
       soundText: 'Bzzz-bzzz!',
       emoji: '🐝',
       syllables: ['Le', 'bah'],
-      description: 'Lebah mungil rajin mengumpulkan nektar bunga untuk membuat madu.',
+      description:
+          'Lebah mungil rajin mengumpulkan nektar bunga untuk membuat madu.',
       primaryColor: Color(0xFFFACC15),
       borderColor: Color(0xFFEAB308),
       soundAsset: 'audio/animals/bee.wav',
@@ -219,7 +222,8 @@ class AppData {
       soundText: 'Hu-huuu!',
       emoji: '🦉',
       syllables: ['Bu', 'rung', 'Han', 'tu'],
-      description: 'Burung hantu memiliki mata bulat besar dan melihat di malam hari.',
+      description:
+          'Burung hantu memiliki mata bulat besar dan melihat di malam hari.',
       primaryColor: Color(0xFF8B5CF6),
       borderColor: Color(0xFF7C3AED),
       soundAsset: 'audio/animals/owl.wav',
@@ -230,7 +234,8 @@ class AppData {
       soundText: 'Siulan Air!',
       emoji: '🐬',
       syllables: ['Lum', 'ba'],
-      description: 'Lumba-lumba sahabat laut yang cerdas dan gemar melompat tinggi.',
+      description:
+          'Lumba-lumba sahabat laut yang cerdas dan gemar melompat tinggi.',
       primaryColor: Color(0xFF06B6D4),
       borderColor: Color(0xFF0891B2),
       soundAsset: 'audio/animals/dolphin.wav',
@@ -322,7 +327,8 @@ class AppData {
       soundText: 'Meluncur ke Bintang!',
       emoji: '🚀',
       syllables: ['Ro', 'ket'],
-      description: 'Meluncur ke luar angkasa menuju bulan dan bintang berkelap-kelip.',
+      description:
+          'Meluncur ke luar angkasa menuju bulan dan bintang berkelap-kelip.',
       primaryColor: Color(0xFFA855F7),
       borderColor: Color(0xFF9333EA),
       soundAsset: 'audio/vehicles/rocket.wav',
@@ -333,7 +339,8 @@ class AppData {
       soundText: 'Whop-whop!',
       emoji: '🚁',
       syllables: ['He', 'li', 'kop', 'ter'],
-      description: 'Baling-baling berputar kencang mengangkat helikopter ke langit.',
+      description:
+          'Baling-baling berputar kencang mengangkat helikopter ke langit.',
       primaryColor: Color(0xFF14B8A6),
       borderColor: Color(0xFF0D9488),
       soundAsset: 'audio/vehicles/heli.wav',
@@ -366,7 +373,8 @@ class AppData {
       soundText: 'Brum-brumm!',
       emoji: '🚚',
       syllables: ['Truk', 'Be', 'sar'],
-      description: 'Mengangkut barang-barang berbobot berat keliling antar kota.',
+      description:
+          'Mengangkut barang-barang berbobot berat keliling antar kota.',
       primaryColor: Color(0xFFD97706),
       borderColor: Color(0xFFB45309),
       soundAsset: 'audio/vehicles/truck.wav',
@@ -377,7 +385,8 @@ class AppData {
       soundText: 'Puk-puk-puk!',
       emoji: '🚜',
       syllables: ['Trak', 'tor'],
-      description: 'Membantu pak tani membajak tanah sawah agar tanaman tumbuh subur.',
+      description:
+          'Membantu pak tani membajak tanah sawah agar tanaman tumbuh subur.',
       primaryColor: Color(0xFF84CC16),
       borderColor: Color(0xFF65A30D),
       soundAsset: 'audio/vehicles/tractor.wav',
@@ -486,29 +495,95 @@ class AppData {
 
   // Kata Dasar Membaca
   static const List<BasicWordItem> basicWords = [
-    BasicWordItem(word: 'BOLA', syllables: ['Bo', 'la'], emoji: '⚽', color: Color(0xFF38BDF8)),
-    BasicWordItem(word: 'BUKU', syllables: ['Bu', 'ku'], emoji: '📚', color: Color(0xFF10B981)),
-    BasicWordItem(word: 'IBU', syllables: ['I', 'bu'], emoji: '👩', color: Color(0xFFEC4899)),
-    BasicWordItem(word: 'BABA', syllables: ['Ba', 'ba'], emoji: '👨', color: Color(0xFF6366F1)),
-    BasicWordItem(word: 'SUSU', syllables: ['Su', 'su'], emoji: '🥛', color: Color(0xFFF59E0B)),
-    BasicWordItem(word: 'ROTI', syllables: ['Ro', 'ti'], emoji: '🍞', color: Color(0xFFF97316)),
-    BasicWordItem(word: 'TOPI', syllables: ['To', 'pi'], emoji: '🧢', color: Color(0xFF14B8A6)),
-    BasicWordItem(word: 'MEJA', syllables: ['Me', 'ja'], emoji: '🪑', color: Color(0xFFA855F7)),
+    BasicWordItem(
+        word: 'BOLA',
+        syllables: ['Bo', 'la'],
+        emoji: '⚽',
+        color: Color(0xFF38BDF8)),
+    BasicWordItem(
+        word: 'BUKU',
+        syllables: ['Bu', 'ku'],
+        emoji: '📚',
+        color: Color(0xFF10B981)),
+    BasicWordItem(
+        word: 'IBU',
+        syllables: ['I', 'bu'],
+        emoji: '👩',
+        color: Color(0xFFEC4899)),
+    BasicWordItem(
+        word: 'BABA',
+        syllables: ['Ba', 'ba'],
+        emoji: '👨',
+        color: Color(0xFF6366F1)),
+    BasicWordItem(
+        word: 'SUSU',
+        syllables: ['Su', 'su'],
+        emoji: '🥛',
+        color: Color(0xFFF59E0B)),
+    BasicWordItem(
+        word: 'ROTI',
+        syllables: ['Ro', 'ti'],
+        emoji: '🍞',
+        color: Color(0xFFF97316)),
+    BasicWordItem(
+        word: 'TOPI',
+        syllables: ['To', 'pi'],
+        emoji: '🧢',
+        color: Color(0xFF14B8A6)),
+    BasicWordItem(
+        word: 'MEJA',
+        syllables: ['Me', 'ja'],
+        emoji: '🪑',
+        color: Color(0xFFA855F7)),
   ];
 
   // Huruf Vokal
   static const Map<String, Map<String, dynamic>> vowels = {
-    'A': {'word': 'Apel', 'emoji': '🍎', 'syl': ['A', 'pel'], 'color': Color(0xFFEF4444)},
-    'I': {'word': 'Ikan', 'emoji': '🐟', 'syl': ['I', 'kan'], 'color': Color(0xFF38BDF8)},
-    'U': {'word': 'Udang', 'emoji': '🦐', 'syl': ['U', 'dang'], 'color': Color(0xFF10B981)},
-    'E': {'word': 'Elang', 'emoji': '🦅', 'syl': ['E', 'lang'], 'color': Color(0xFFF59E0B)},
-    'O': {'word': 'Obat', 'emoji': '💊', 'syl': ['O', 'bat'], 'color': Color(0xFFA855F7)},
+    'A': {
+      'word': 'Apel',
+      'emoji': '🍎',
+      'syl': ['A', 'pel'],
+      'color': Color(0xFFEF4444)
+    },
+    'I': {
+      'word': 'Ikan',
+      'emoji': '🐟',
+      'syl': ['I', 'kan'],
+      'color': Color(0xFF38BDF8)
+    },
+    'U': {
+      'word': 'Udang',
+      'emoji': '🦐',
+      'syl': ['U', 'dang'],
+      'color': Color(0xFF10B981)
+    },
+    'E': {
+      'word': 'Elang',
+      'emoji': '🦅',
+      'syl': ['E', 'lang'],
+      'color': Color(0xFFF59E0B)
+    },
+    'O': {
+      'word': 'Obat',
+      'emoji': '💊',
+      'syl': ['O', 'bat'],
+      'color': Color(0xFFA855F7)
+    },
   };
 
   // Angka 1-10
   static const List<String> numberWords = [
-    '', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima',
-    'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh'
+    '',
+    'Satu',
+    'Dua',
+    'Tiga',
+    'Empat',
+    'Lima',
+    'Enam',
+    'Tujuh',
+    'Delapan',
+    'Sembilan',
+    'Sepuluh'
   ];
 
   static const List<List<String>> numberSyllables = [
@@ -523,5 +598,203 @@ class AppData {
     ['De', 'la', 'pan'],
     ['Sem', 'bi', 'lan'],
     ['Se', 'pu', 'luh'],
+  ];
+
+  // 8 Aktivitas Harian (Daily Routines & Kemandirian)
+  static const List<EduItem> routines = [
+    EduItem(
+      id: 'makan',
+      name: 'Makan',
+      soundText: 'Nyam-nyam! 🍲',
+      emoji: '🍲',
+      syllables: ['Ma', 'kan'],
+      description: 'Makan makanan sehat bergizi agar tubuh kuat dan pintar.',
+      primaryColor: Color(0xFFF59E0B),
+      borderColor: Color(0xFFFBBF24),
+      soundAsset: 'audio/routines/eating.wav',
+    ),
+    EduItem(
+      id: 'minum',
+      name: 'Minum',
+      soundText: 'Gluk-gluk! 🥛',
+      emoji: '🥛',
+      syllables: ['Mi', 'num'],
+      description:
+          'Minum air putih segar secara teratur agar badan selalu segar.',
+      primaryColor: Color(0xFF38BDF8),
+      borderColor: Color(0xFF0284C7),
+      soundAsset: 'audio/routines/drinking.wav',
+    ),
+    EduItem(
+      id: 'pipis',
+      name: 'Pipis',
+      soundText: 'Syuuur-flush! 🚽',
+      emoji: '🚽',
+      syllables: ['Pi', 'pis'],
+      description:
+          'Beri tahu Ayah & Bunda saat mau pipis di toilet kamar mandi.',
+      primaryColor: Color(0xFF06B6D4),
+      borderColor: Color(0xFF0891B2),
+      soundAsset: 'audio/routines/pee.wav',
+    ),
+    EduItem(
+      id: 'pup',
+      name: 'Pupup',
+      soundText: 'Plung-splash! 🧻',
+      emoji: '🧻',
+      syllables: ['Pu', 'pup'],
+      description:
+          'Duduk nyaman di kloset lalu bersihkan hingga tuntas dan bersih.',
+      primaryColor: Color(0xFFD97706),
+      borderColor: Color(0xFFB45309),
+      soundAsset: 'audio/routines/poop.wav',
+    ),
+    EduItem(
+      id: 'mandi',
+      name: 'Mandi',
+      soundText: 'Kwek-byuuur! 🛁',
+      emoji: '🛁',
+      syllables: ['Man', 'di'],
+      description:
+          'Mandi air sejuk pakai sabun wangi dan bebek karet yang riang.',
+      primaryColor: Color(0xFF10B981),
+      borderColor: Color(0xFF059669),
+      soundAsset: 'audio/routines/bath.wav',
+    ),
+    EduItem(
+      id: 'sikat_gigi',
+      name: 'Sikat Gigi',
+      soundText: 'Gosok-gosok! 🪥',
+      emoji: '🪥',
+      syllables: ['Si', 'kat', 'Gi', 'gi'],
+      description:
+          'Sikat gigi pagi hari dan malam sebelum tidur agar gigi sehat putih.',
+      primaryColor: Color(0xFF8B5CF6),
+      borderColor: Color(0xFF7C3AED),
+      soundAsset: 'audio/routines/brush_teeth.wav',
+    ),
+    EduItem(
+      id: 'cuci_tangan',
+      name: 'Cuci Tangan',
+      soundText: 'Gemericik air! 🧼',
+      emoji: '🧼',
+      syllables: ['Cu', 'ci', 'Ta', 'ngan'],
+      description:
+          'Bilas tangan pakai sabun setelah main agar kuman hilang bersih.',
+      primaryColor: Color(0xFF14B8A6),
+      borderColor: Color(0xFF0D9488),
+      soundAsset: 'audio/routines/wash_hands.wav',
+    ),
+    EduItem(
+      id: 'bobo',
+      name: 'Bobo',
+      soundText: 'Lullaby lembut... 🛌',
+      emoji: '🛌',
+      syllables: ['Bo', 'bo'],
+      description:
+          'Bobo nyenyak tepat waktu agar mimpi indah dan bangun bugar.',
+      primaryColor: Color(0xFF6366F1),
+      borderColor: Color(0xFF4F46E5),
+      soundAsset: 'audio/routines/sleep.wav',
+    ),
+  ];
+
+  // 8 Ekspresi & Emosi (Expressions & Feelings)
+  static const List<EduItem> emotions = [
+    EduItem(
+      id: 'senang',
+      name: 'Senang',
+      soundText: 'Hahaha ceria! 😄',
+      emoji: '😄',
+      syllables: ['Se', 'nang'],
+      description:
+          'Senyum mengembang ceria, hati gembira bermain bersama teman!',
+      primaryColor: Color(0xFFF59E0B),
+      borderColor: Color(0xFFFBBF24),
+      soundAsset: 'audio/emotions/happy.wav',
+    ),
+    EduItem(
+      id: 'sedih',
+      name: 'Sedih',
+      soundText: 'Huhu... peluk ya 🥺',
+      emoji: '🥺',
+      syllables: ['Se', 'dih'],
+      description: 'Tak apa merasa sedih, peluk Ayah & Bunda agar hati tenang.',
+      primaryColor: Color(0xFF38BDF8),
+      borderColor: Color(0xFF0284C7),
+      soundAsset: 'audio/emotions/sad.wav',
+    ),
+    EduItem(
+      id: 'marah',
+      name: 'Marah',
+      soundText: 'Tarik napas lega... 😤',
+      emoji: '😤',
+      syllables: ['Ma', 'rah'],
+      description:
+          'Saat kesal, hembuskan napas pelan seperti meniup lilin lembut.',
+      primaryColor: Color(0xFFEF4444),
+      borderColor: Color(0xFFDC2626),
+      soundAsset: 'audio/emotions/angry.wav',
+    ),
+    EduItem(
+      id: 'kaget',
+      name: 'Kaget',
+      soundText: 'Wah, o-oh! 😲',
+      emoji: '😲',
+      syllables: ['Ka', 'get'],
+      description:
+          'Ada kejutan seru yang membuat mata dan mulut membulat heran!',
+      primaryColor: Color(0xFFF97316),
+      borderColor: Color(0xFFEA580C),
+      soundAsset: 'audio/emotions/surprised.wav',
+    ),
+    EduItem(
+      id: 'takut',
+      name: 'Takut',
+      soundText: 'Deg-deg... aman kok! 🫣',
+      emoji: '🫣',
+      syllables: ['Ta', 'kut'],
+      description:
+          'Ada Ayah & Bunda yang selalu menjagamu, kamu anak pemberani!',
+      primaryColor: Color(0xFF8B5CF6),
+      borderColor: Color(0xFF7C3AED),
+      soundAsset: 'audio/emotions/scared.wav',
+    ),
+    EduItem(
+      id: 'sayang',
+      name: 'Sayang',
+      soundText: 'Muach! Sayang kamu! 🥰',
+      emoji: '🥰',
+      syllables: ['Sa', 'yang'],
+      description:
+          'Peluk hangat penuh kasih untuk mama, papa, dan sahabat tersayang.',
+      primaryColor: Color(0xFFEC4899),
+      borderColor: Color(0xFFDB2777),
+      soundAsset: 'audio/emotions/love.wav',
+    ),
+    EduItem(
+      id: 'mengantuk',
+      name: 'Mengantuk',
+      soundText: 'Hoaaam... ngantuk 🥱',
+      emoji: '🥱',
+      syllables: ['Ngan', 'tuk'],
+      description:
+          'Mata terasa berat dan menguap lucu, saatnya istirahat tidur.',
+      primaryColor: Color(0xFF6366F1),
+      borderColor: Color(0xFF4F46E5),
+      soundAsset: 'audio/emotions/sleepy.wav',
+    ),
+    EduItem(
+      id: 'hebat',
+      name: 'Hebat',
+      soundText: 'Horeee, berhasil! 🥳',
+      emoji: '🥳',
+      syllables: ['He', 'bat'],
+      description:
+          'Horeee! Aku berhasil melakukannya sendiri, aku bangga dan hebat!',
+      primaryColor: Color(0xFF10B981),
+      borderColor: Color(0xFF059669),
+      soundAsset: 'audio/emotions/proud.wav',
+    ),
   ];
 }

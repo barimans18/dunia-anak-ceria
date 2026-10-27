@@ -10,6 +10,8 @@ import '../../fruits/screens/fruits_screen.dart';
 import '../../interactive_cartoon/screens/interactive_cartoon_list_screen.dart';
 import '../../numbers/screens/numbers_screen.dart';
 import '../../reading/screens/reading_screen.dart';
+import '../../routines/screens/routines_screen.dart';
+import '../../emotions/screens/emotions_screen.dart';
 import '../../vehicles/screens/vehicles_screen.dart';
 import '../../voice_mimic/screens/voice_mimic_screen.dart';
 import '../../story/screens/story_list_screen.dart';
@@ -96,6 +98,14 @@ class _HomeScreenState extends State<HomeScreen> {
       case 'reading':
         return ReadingScreen(
             key: const ValueKey('reading'),
+            onBack: () => _switchView('learn_hub'));
+      case 'routines':
+        return RoutinesScreen(
+            key: const ValueKey('routines'),
+            onBack: () => _switchView('learn_hub'));
+      case 'emotions':
+        return EmotionsScreen(
+            key: const ValueKey('emotions'),
             onBack: () => _switchView('learn_hub'));
       case 'numbers':
         return NumbersScreen(
@@ -540,6 +550,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     badgeColor: AppColors.playfulPurple,
                     onTap: () => _switchView('reading'),
                   ),
+                  _buildHubCategoryCard(
+                    title: 'Aktivitas Harian',
+                    subtitle: '8 Rutinitas Mandiri',
+                    badge: 'Buka 🪥',
+                    emoji: '🪥',
+                    svgAsset: 'assets/icons/routines.svg',
+                    borderColor: AppColors.warmAmber,
+                    badgeColor: AppColors.warmAmber,
+                    onTap: () => _switchView('routines'),
+                  ),
+                  _buildHubCategoryCard(
+                    title: 'Ekspresi & Emosi',
+                    subtitle: '8 Perasaan & Empati',
+                    badge: 'Buka 😊',
+                    emoji: '😊',
+                    svgAsset: 'assets/icons/emotions.svg',
+                    borderColor: AppColors.coralRed,
+                    badgeColor: AppColors.coralRed,
+                    onTap: () => _switchView('emotions'),
+                  ),
                 ],
               );
             },
@@ -660,7 +690,8 @@ class _HomeScreenState extends State<HomeScreen> {
       {required String id, required String icon, required String label}) {
     final isSelected = currentView == id ||
         (id == 'learn_hub' &&
-            ['animals', 'vehicles', 'fruits', 'reading'].contains(currentView));
+            ['animals', 'vehicles', 'fruits', 'reading', 'routines', 'emotions']
+                .contains(currentView));
 
     return GestureDetector(
       onTap: () => _switchView(id),

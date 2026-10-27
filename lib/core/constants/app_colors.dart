@@ -7,6 +7,7 @@ class AppColors {
   static const Color sunnyYellow = Color(0xFFFBBF24);
   static const Color warmAmber = Color(0xFFF59E0B);
   static const Color coralOrange = Color(0xFFFB923C);
+  static const Color coralRed = Color(0xFFF43F5E);
   static const Color softPink = Color(0xFFF472B6);
   static const Color playfulPurple = Color(0xFFA855F7);
   static const Color emeraldGreen = Color(0xFF10B981);
