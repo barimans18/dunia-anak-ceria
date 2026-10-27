@@ -23,7 +23,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String currentView = 'home'; // 'home', 'learn_hub', 'animals', 'vehicles', 'fruits', 'reading', 'numbers', 'video', 'mimic'
+  String currentView =
+      'home'; // 'home', 'learn_hub', 'animals', 'vehicles', 'fruits', 'reading', 'numbers', 'video', 'mimic'
 
   @override
   void initState() {
@@ -81,21 +82,33 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildCurrentView() {
     switch (currentView) {
       case 'animals':
-        return AnimalsScreen(key: const ValueKey('animals'), onBack: () => _switchView('learn_hub'));
+        return AnimalsScreen(
+            key: const ValueKey('animals'),
+            onBack: () => _switchView('learn_hub'));
       case 'vehicles':
-        return VehiclesScreen(key: const ValueKey('vehicles'), onBack: () => _switchView('learn_hub'));
+        return VehiclesScreen(
+            key: const ValueKey('vehicles'),
+            onBack: () => _switchView('learn_hub'));
       case 'fruits':
-        return FruitsScreen(key: const ValueKey('fruits'), onBack: () => _switchView('learn_hub'));
+        return FruitsScreen(
+            key: const ValueKey('fruits'),
+            onBack: () => _switchView('learn_hub'));
       case 'reading':
-        return ReadingScreen(key: const ValueKey('reading'), onBack: () => _switchView('learn_hub'));
+        return ReadingScreen(
+            key: const ValueKey('reading'),
+            onBack: () => _switchView('learn_hub'));
       case 'numbers':
-        return NumbersScreen(key: const ValueKey('numbers'), onBack: () => _switchView('home'));
+        return NumbersScreen(
+            key: const ValueKey('numbers'), onBack: () => _switchView('home'));
       case 'video':
-        return InteractiveCartoonScreen(key: const ValueKey('video'), onBack: () => _switchView('home'));
+        return InteractiveCartoonScreen(
+            key: const ValueKey('video'), onBack: () => _switchView('home'));
       case 'mimic':
-        return VoiceMimicScreen(key: const ValueKey('mimic'), onBack: () => _switchView('home'));
+        return VoiceMimicScreen(
+            key: const ValueKey('mimic'), onBack: () => _switchView('home'));
       case 'stories':
-        return StoryListScreen(key: const ValueKey('stories'), onBack: () => _switchView('home'));
+        return StoryListScreen(
+            key: const ValueKey('stories'), onBack: () => _switchView('home'));
       case 'learn_hub':
         return _buildLearnHub();
       case 'home':
@@ -121,6 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
               border: Border.all(color: Colors.white, width: 2.5),
               boxShadow: [
                 BoxShadow(
+                  // ignore: deprecated_member_use
                   color: Colors.amber.withOpacity(0.3),
                   blurRadius: 12,
                   offset: const Offset(0, 6),
@@ -134,8 +148,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(
+                          // ignore: deprecated_member_use
                           color: Colors.white.withOpacity(0.35),
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -251,10 +267,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   const Text('🔢', style: TextStyle(fontSize: 32)),
                   const SizedBox(width: 12),
-                  Expanded(
+                  const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
                           'Ayo Menghitung 1 sampai 10',
                           style: TextStyle(
@@ -275,7 +291,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: AppColors.sunnyYellow,
                       borderRadius: BorderRadius.circular(14),
@@ -319,10 +336,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   const Text('📚', style: TextStyle(fontSize: 32)),
                   const SizedBox(width: 12),
-                  Expanded(
+                  const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
                           'Buku Cerita Interaktif',
                           style: TextStyle(
@@ -332,7 +349,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          'Pisang Manis untuk Dudung 🍌 (Karaoke & Sentuh)',
+                          'Dengarkan narasi seru & sentuh gambarnya! ✨',
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w600,
@@ -343,7 +360,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: const Color(0xFFF59E0B),
                       borderRadius: BorderRadius.circular(14),
@@ -457,14 +475,19 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           const Text(
             'Pilih Kategori Belajar 🎒',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: Color(0xFF0F172A)),
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w900,
+                color: Color(0xFF0F172A)),
           ),
           const Text(
             'Sentuh untuk membuka topik favoritmu:',
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.black54),
+            style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: Colors.black54),
           ),
           const SizedBox(height: 14),
-
           LayoutBuilder(
             builder: (context, constraints) {
               final crossAxisCount = constraints.maxWidth >= 600 ? 4 : 2;
@@ -567,12 +590,18 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               title,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w900, color: AppColors.textDark),
+              style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w900,
+                  color: AppColors.textDark),
             ),
             Text(
               subtitle,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: Colors.grey.shade600),
+              style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.grey.shade600),
             ),
             const SizedBox(height: 10),
             Container(
@@ -583,7 +612,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               child: Text(
                 badge,
-                style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w900, color: Colors.white),
+                style: const TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.white),
               ),
             ),
           ],
@@ -624,9 +656,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildNavItem({required String id, required String icon, required String label}) {
+  Widget _buildNavItem(
+      {required String id, required String icon, required String label}) {
     final isSelected = currentView == id ||
-        (id == 'learn_hub' && ['animals', 'vehicles', 'fruits', 'reading'].contains(currentView));
+        (id == 'learn_hub' &&
+            ['animals', 'vehicles', 'fruits', 'reading'].contains(currentView));
 
     return GestureDetector(
       onTap: () => _switchView(id),

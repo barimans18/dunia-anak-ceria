@@ -24,6 +24,7 @@ class _StoryListScreenState extends State<StoryListScreen> {
   final List<String> _storyAssetPaths = [
     'assets/stories/somat_pisang.json',
     'assets/stories/milo_kue_pisang.json',
+    'assets/stories/jono_dan_sisil.json',
   ];
 
   @override

@@ -8,13 +8,20 @@ class InteractiveCartoonScreen extends StatefulWidget {
   const InteractiveCartoonScreen({super.key, required this.onBack});
 
   @override
-  State<InteractiveCartoonScreen> createState() => _InteractiveCartoonScreenState();
+  State<InteractiveCartoonScreen> createState() =>
+      _InteractiveCartoonScreenState();
 }
 
 class Particle {
   double x, y, vx, vy, size;
   Color color;
-  Particle({required this.x, required this.y, required this.vx, required this.vy, required this.size, required this.color});
+  Particle(
+      {required this.x,
+      required this.y,
+      required this.vx,
+      required this.vy,
+      required this.size,
+      required this.color});
 }
 
 class Raindrop {
@@ -22,9 +29,10 @@ class Raindrop {
   Raindrop({required this.x, required this.y, required this.speed});
 }
 
-class _InteractiveCartoonScreenState extends State<InteractiveCartoonScreen> with SingleTickerProviderStateMixin {
+class _InteractiveCartoonScreenState extends State<InteractiveCartoonScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animController;
-  
+
   bool isNight = false;
   bool isRaining = false;
   bool hasRainbow = false;
@@ -108,7 +116,12 @@ class _InteractiveCartoonScreenState extends State<InteractiveCartoonScreen> wit
           vx: cos(angle) * speed,
           vy: sin(angle) * speed,
           size: 6 + _rand.nextDouble() * 4,
-          color: [Colors.amber, Colors.pinkAccent, Colors.lightBlueAccent, Colors.lightGreenAccent][_rand.nextInt(4)],
+          color: [
+            Colors.amber,
+            Colors.pinkAccent,
+            Colors.lightBlueAccent,
+            Colors.lightGreenAccent
+          ][_rand.nextInt(4)],
         ));
       }
     });
@@ -119,7 +132,8 @@ class _InteractiveCartoonScreenState extends State<InteractiveCartoonScreen> wit
   void _toggleDayNight() {
     setState(() => isNight = !isNight);
     SoundEngine().playClick();
-    SoundEngine().speakWord(isNight ? 'Malam hari yang tenang...' : 'Siang hari yang ceria!');
+    SoundEngine().speakWord(
+        isNight ? 'Malam hari yang tenang...' : 'Siang hari yang ceria!');
   }
 
   void _triggerRainbow() {
@@ -146,7 +160,14 @@ class _InteractiveCartoonScreenState extends State<InteractiveCartoonScreen> wit
     SoundEngine().playWinStar();
     SoundEngine().speakWord('Wah, kembang api meriah!');
     setState(() {
-      final colors = [Colors.red, Colors.amber, Colors.green, Colors.blue, Colors.pink, Colors.purple];
+      final colors = [
+        Colors.red,
+        Colors.amber,
+        Colors.green,
+        Colors.blue,
+        Colors.pink,
+        Colors.purple
+      ];
       for (int i = 0; i < 30; i++) {
         final angle = _rand.nextDouble() * 2 * pi;
         final speed = 2 + _rand.nextDouble() * 5;
@@ -190,10 +211,10 @@ class _InteractiveCartoonScreenState extends State<InteractiveCartoonScreen> wit
                 ),
               ),
               const SizedBox(width: 12),
-              Expanded(
+              const Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
                       'Kartun Interaktif 🎬',
                       style: TextStyle(
@@ -214,14 +235,16 @@ class _InteractiveCartoonScreenState extends State<InteractiveCartoonScreen> wit
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
                   color: AppColors.sunnyYellow,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Text(
                   '⭐ $starScore',
-                  style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w900, fontSize: 13),
                 ),
               ),
             ],
@@ -280,12 +303,18 @@ class _InteractiveCartoonScreenState extends State<InteractiveCartoonScreen> wit
               childAspectRatio: 2.1,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                _buildActionBtn('🌙 Malam/Siang', _toggleDayNight, const Color(0xFFE0E7FF), const Color(0xFF3730A3)),
-                _buildActionBtn('🌈 Pelangi', _triggerRainbow, const Color(0xFFFCE7F3), const Color(0xFF9D174D)),
-                _buildActionBtn('🌧️ Hujan', _triggerRain, const Color(0xFFE0F2FE), const Color(0xFF0369A1)),
-                _buildActionBtn('🏎️ Laju Cepat', _boostCar, const Color(0xFFFEF3C7), const Color(0xFF92400E)),
-                _buildActionBtn('🎆 Kembang Api', _spawnFireworks, const Color(0xFFFFE4E6), const Color(0xFFBE123C)),
-                _buildActionBtn('🎈 Balon Udara', _spawnBalloon, const Color(0xFFF3E8FF), const Color(0xFF6B21A8)),
+                _buildActionBtn('🌙 Malam/Siang', _toggleDayNight,
+                    const Color(0xFFE0E7FF), const Color(0xFF3730A3)),
+                _buildActionBtn('🌈 Pelangi', _triggerRainbow,
+                    const Color(0xFFFCE7F3), const Color(0xFF9D174D)),
+                _buildActionBtn('🌧️ Hujan', _triggerRain,
+                    const Color(0xFFE0F2FE), const Color(0xFF0369A1)),
+                _buildActionBtn('🏎️ Laju Cepat', _boostCar,
+                    const Color(0xFFFEF3C7), const Color(0xFF92400E)),
+                _buildActionBtn('🎆 Kembang Api', _spawnFireworks,
+                    const Color(0xFFFFE4E6), const Color(0xFFBE123C)),
+                _buildActionBtn('🎈 Balon Udara', _spawnBalloon,
+                    const Color(0xFFF3E8FF), const Color(0xFF6B21A8)),
               ],
             ),
           ),
@@ -294,7 +323,8 @@ class _InteractiveCartoonScreenState extends State<InteractiveCartoonScreen> wit
     );
   }
 
-  Widget _buildActionBtn(String label, VoidCallback onTap, Color bg, Color textCol) {
+  Widget _buildActionBtn(
+      String label, VoidCallback onTap, Color bg, Color textCol) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: bg,
@@ -362,14 +392,23 @@ class CartoonPainter extends CustomPainter {
 
     // 3. Rainbow
     if (hasRainbow) {
-      final colors = [Colors.red, Colors.orange, Colors.yellow, Colors.green, Colors.blue, Colors.purple];
+      final colors = [
+        Colors.red,
+        Colors.orange,
+        Colors.yellow,
+        Colors.green,
+        Colors.blue,
+        Colors.purple
+      ];
       for (int i = 0; i < colors.length; i++) {
         final arcPaint = Paint()
           ..color = colors[i]
           ..style = PaintingStyle.stroke
           ..strokeWidth = 4;
         canvas.drawArc(
-          Rect.fromCircle(center: Offset(size.width / 2, size.height - 20), radius: 100.0 - i * 5),
+          Rect.fromCircle(
+              center: Offset(size.width / 2, size.height - 20),
+              radius: 100.0 - i * 5),
           pi,
           pi,
           false,
@@ -399,19 +438,33 @@ class CartoonPainter extends CustomPainter {
       final bPaint = Paint()..color = const Color(0xFFEC4899);
       canvas.drawCircle(Offset(balloonX, balloonY), 18, bPaint);
       final basketPaint = Paint()..color = const Color(0xFF831843);
-      canvas.drawRect(Rect.fromLTWH(balloonX - 5, balloonY + 20, 10, 8), basketPaint);
+      canvas.drawRect(
+          Rect.fromLTWH(balloonX - 5, balloonY + 20, 10, 8), basketPaint);
     }
 
     // 6. Grass Hills
-    final hill1 = Paint()..color = isNight ? const Color(0xFF1E3A1E) : const Color(0xFF4ADE80);
-    canvas.drawOval(Rect.fromCenter(center: Offset(size.width * 0.3, size.height - 15), width: size.width * 0.8, height: 90), hill1);
+    final hill1 = Paint()
+      ..color = isNight ? const Color(0xFF1E3A1E) : const Color(0xFF4ADE80);
+    canvas.drawOval(
+        Rect.fromCenter(
+            center: Offset(size.width * 0.3, size.height - 15),
+            width: size.width * 0.8,
+            height: 90),
+        hill1);
 
-    final hill2 = Paint()..color = isNight ? const Color(0xFF142E14) : const Color(0xFF22C55E);
-    canvas.drawOval(Rect.fromCenter(center: Offset(size.width * 0.8, size.height - 10), width: size.width * 0.7, height: 80), hill2);
+    final hill2 = Paint()
+      ..color = isNight ? const Color(0xFF142E14) : const Color(0xFF22C55E);
+    canvas.drawOval(
+        Rect.fromCenter(
+            center: Offset(size.width * 0.8, size.height - 10),
+            width: size.width * 0.7,
+            height: 80),
+        hill2);
 
     // 7. Road
     final roadPaint = Paint()..color = const Color(0xFF475569);
-    canvas.drawRect(Rect.fromLTWH(0, size.height - 45, size.width, 45), roadPaint);
+    canvas.drawRect(
+        Rect.fromLTWH(0, size.height - 45, size.width, 45), roadPaint);
 
     final linePaint = Paint()..color = Colors.white;
     for (double x = 10; x < size.width; x += 40) {
@@ -424,17 +477,24 @@ class CartoonPainter extends CustomPainter {
         ..color = const Color(0xFFE0F2FE)
         ..strokeWidth = 2;
       for (var drop in raindrops) {
-        canvas.drawLine(Offset(drop.x, drop.y), Offset(drop.x - 2, drop.y + 10), rainPaint);
+        canvas.drawLine(
+            Offset(drop.x, drop.y), Offset(drop.x - 2, drop.y + 10), rainPaint);
       }
     }
 
     // 9. Moving Car
     final cy = size.height - 48;
     final carBody = Paint()..color = const Color(0xFFEF4444);
-    canvas.drawRRect(RRect.fromRectAndRadius(Rect.fromLTWH(carX, cy, 55, 20), const Radius.circular(8)), carBody);
+    canvas.drawRRect(
+        RRect.fromRectAndRadius(
+            Rect.fromLTWH(carX, cy, 55, 20), const Radius.circular(8)),
+        carBody);
 
     final carRoof = Paint()..color = const Color(0xFFF87171);
-    canvas.drawRRect(RRect.fromRectAndRadius(Rect.fromLTWH(carX + 10, cy - 12, 30, 14), const Radius.circular(5)), carRoof);
+    canvas.drawRRect(
+        RRect.fromRectAndRadius(Rect.fromLTWH(carX + 10, cy - 12, 30, 14),
+            const Radius.circular(5)),
+        carRoof);
 
     // Wheels
     final wheelPaint = Paint()..color = const Color(0xFF1E293B);

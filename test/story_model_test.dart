@@ -72,5 +72,39 @@ void main() {
       expect(hotspot.radius, 42.0);
       expect(hotspot.sfxPath, 'assets/audio/sfx/steam_sparkle.wav');
     });
+
+    test('Parses jono_dan_sisil.json successfully and verifies all fields', () {
+      final file = File('assets/stories/jono_dan_sisil.json');
+      expect(file.existsSync(), isTrue);
+
+      final jsonMap = jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
+      final story = StoryModel.fromJson(jsonMap);
+
+      expect(story.id, 'jono_dan_sisil');
+      expect(story.title, 'Pisang Manis Jono dan Sisil');
+      expect(story.theme, 'Sahabat Hewan & Berbagi');
+      expect(story.coverImage, 'assets/images/stories/jono_dan_sisil/cover.webp');
+      expect(story.pages.length, 5);
+
+      // Verifikasi Halaman 1
+      final page1 = story.pages[0];
+      expect(page1.pageNumber, 1);
+      expect(page1.imagePath, 'assets/images/stories/jono_dan_sisil/page_1.webp');
+      expect(page1.audioPath, 'assets/audio/stories/jono_dan_sisil/page_1.mp3');
+      expect(page1.syllables.isNotEmpty, isTrue);
+
+      final syllable1 = page1.syllables.first;
+      expect(syllable1.text, 'Jo-no');
+      expect(syllable1.startMs, 0);
+      expect(syllable1.endMs, 480);
+
+      expect(page1.hotspots.length, 2);
+      final hotspot = page1.hotspots.first;
+      expect(hotspot.name, 'Jono si Monyet');
+      expect(hotspot.xPercent, 60.0);
+      expect(hotspot.yPercent, 46.0);
+      expect(hotspot.radius, 46.0);
+      expect(hotspot.sfxPath, 'assets/audio/sfx/monkey_chatter.wav');
+    });
   });
 }

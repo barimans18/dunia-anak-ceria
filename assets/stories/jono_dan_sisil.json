@@ -1,0 +1,194 @@
+{
+  "id": "jono_dan_sisil",
+  "title": "Pisang Manis Jono dan Sisil",
+  "theme": "Sahabat Hewan & Berbagi",
+  "cover_image": "assets/images/stories/jono_dan_sisil/cover.webp",
+  "pages": [
+    {
+      "page_number": 1,
+      "image_path": "assets/images/stories/jono_dan_sisil/page_1.webp",
+      "audio_path": "assets/audio/stories/jono_dan_sisil/page_1.mp3",
+      "full_text": "Jono si monyet punya banyak buah pisang manis.",
+      "syllables": [
+        {"text": "Jo-no", "start_ms": 0, "end_ms": 480},
+        {"text": "si", "start_ms": 550, "end_ms": 800},
+        {"text": "mo-nyet", "start_ms": 860, "end_ms": 1400},
+        {"text": "pu-nya", "start_ms": 1470, "end_ms": 1950},
+        {"text": "ba-nyak", "start_ms": 2020, "end_ms": 2550},
+        {"text": "bu-ah", "start_ms": 2620, "end_ms": 3050},
+        {"text": "pi-sang", "start_ms": 3120, "end_ms": 3650},
+        {"text": "ma-nis.", "start_ms": 3720, "end_ms": 4300}
+      ],
+      "hotspots": [
+        {
+          "name": "Jono si Monyet",
+          "x_percent": 60.0,
+          "y_percent": 46.0,
+          "radius": 46.0,
+          "sfx_path": "assets/audio/sfx/monkey_chatter.wav"
+        },
+        {
+          "name": "Tandan Pisang Manis",
+          "x_percent": 37.0,
+          "y_percent": 44.0,
+          "radius": 44.0,
+          "sfx_path": "assets/audio/sfx/leaves_rustle.wav"
+        }
+      ]
+    },
+    {
+      "page_number": 2,
+      "image_path": "assets/images/stories/jono_dan_sisil/page_2.webp",
+      "audio_path": "assets/audio/stories/jono_dan_sisil/page_2.mp3",
+      "full_text": "Sisil kelinci penasaran ingin mencoba makan pisang.",
+      "syllables": [
+        {"text": "Si-sil", "start_ms": 0, "end_ms": 520},
+        {"text": "ke-lin-ci", "start_ms": 590, "end_ms": 1200},
+        {"text": "pe-nas-a-ran", "start_ms": 1270, "end_ms": 2050},
+        {"text": "i-ngin", "start_ms": 2120, "end_ms": 2550},
+        {"text": "men-co-ba", "start_ms": 2620, "end_ms": 3200},
+        {"text": "ma-kan", "start_ms": 3270, "end_ms": 3750},
+        {"text": "pi-sang.", "start_ms": 3820, "end_ms": 4450}
+      ],
+      "hotspots": [
+        {
+          "name": "Sisil si Kelinci",
+          "x_percent": 68.0,
+          "y_percent": 68.0,
+          "radius": 44.0,
+          "sfx_path": "assets/audio/sfx/bunny_squeak.wav"
+        },
+        {
+          "name": "Wortel Sisil",
+          "x_percent": 61.0,
+          "y_percent": 70.0,
+          "radius": 34.0,
+          "sfx_path": "assets/audio/sfx/carrot_crunch.wav"
+        },
+        {
+          "name": "Jono si Monyet",
+          "x_percent": 37.0,
+          "y_percent": 33.0,
+          "radius": 42.0,
+          "sfx_path": "assets/audio/sfx/monkey_chatter.wav"
+        }
+      ]
+    },
+    {
+      "page_number": 3,
+      "image_path": "assets/images/stories/jono_dan_sisil/page_3.webp",
+      "audio_path": "assets/audio/stories/jono_dan_sisil/page_3.mp3",
+      "full_text": "Mereka sempat berebut pisang dengan suara lucu.",
+      "syllables": [
+        {"text": "Me-re-ka", "start_ms": 0, "end_ms": 580},
+        {"text": "sem-pat", "start_ms": 650, "end_ms": 1150},
+        {"text": "be-re-but", "start_ms": 1220, "end_ms": 1800},
+        {"text": "pi-sang", "start_ms": 1870, "end_ms": 2400},
+        {"text": "de-ngan", "start_ms": 2470, "end_ms": 2900},
+        {"text": "su-a-ra", "start_ms": 2970, "end_ms": 3450},
+        {"text": "lu-cu.", "start_ms": 3520, "end_ms": 4100}
+      ],
+      "hotspots": [
+        {
+          "name": "Rebutan Pisang",
+          "x_percent": 54.0,
+          "y_percent": 55.0,
+          "radius": 40.0,
+          "sfx_path": "assets/audio/sfx/boing_spring.wav"
+        },
+        {
+          "name": "Jono si Monyet",
+          "x_percent": 37.0,
+          "y_percent": 52.0,
+          "radius": 46.0,
+          "sfx_path": "assets/audio/sfx/monkey_chatter.wav"
+        },
+        {
+          "name": "Sisil si Kelinci",
+          "x_percent": 64.0,
+          "y_percent": 52.0,
+          "radius": 44.0,
+          "sfx_path": "assets/audio/sfx/bunny_squeak.wav"
+        }
+      ]
+    },
+    {
+      "page_number": 4,
+      "image_path": "assets/images/stories/jono_dan_sisil/page_4.webp",
+      "audio_path": "assets/audio/stories/jono_dan_sisil/page_4.mp3",
+      "full_text": "Jono tersenyum lalu memberi pisang dan wortel segar.",
+      "syllables": [
+        {"text": "Jo-no", "start_ms": 0, "end_ms": 480},
+        {"text": "ter-se-nyum", "start_ms": 550, "end_ms": 1250},
+        {"text": "la-lu", "start_ms": 1320, "end_ms": 1720},
+        {"text": "mem-be-ri", "start_ms": 1790, "end_ms": 2350},
+        {"text": "pi-sang", "start_ms": 2420, "end_ms": 2920},
+        {"text": "dan", "start_ms": 2990, "end_ms": 3250},
+        {"text": "wor-tel", "start_ms": 3320, "end_ms": 3820},
+        {"text": "se-gar.", "start_ms": 3890, "end_ms": 4450}
+      ],
+      "hotspots": [
+        {
+          "name": "Pisang Manis",
+          "x_percent": 48.0,
+          "y_percent": 56.0,
+          "radius": 38.0,
+          "sfx_path": "assets/audio/sfx/banana_peel.wav"
+        },
+        {
+          "name": "Kilau Berbagi",
+          "x_percent": 53.0,
+          "y_percent": 46.0,
+          "radius": 42.0,
+          "sfx_path": "assets/audio/sfx/sparkle_magic.wav"
+        },
+        {
+          "name": "Wortel Segar",
+          "x_percent": 57.0,
+          "y_percent": 58.0,
+          "radius": 35.0,
+          "sfx_path": "assets/audio/sfx/carrot_crunch.wav"
+        }
+      ]
+    },
+    {
+      "page_number": 5,
+      "image_path": "assets/images/stories/jono_dan_sisil/page_5.webp",
+      "audio_path": "assets/audio/stories/jono_dan_sisil/page_5.mp3",
+      "full_text": "Jono dan Sisil makan bersama dengan sangat gembira.",
+      "syllables": [
+        {"text": "Jo-no", "start_ms": 0, "end_ms": 460},
+        {"text": "dan", "start_ms": 530, "end_ms": 780},
+        {"text": "Si-sil", "start_ms": 850, "end_ms": 1320},
+        {"text": "ma-kan", "start_ms": 1390, "end_ms": 1850},
+        {"text": "ber-sa-ma", "start_ms": 1920, "end_ms": 2520},
+        {"text": "de-ngan", "start_ms": 2590, "end_ms": 3000},
+        {"text": "sa-ngat", "start_ms": 3070, "end_ms": 3520},
+        {"text": "gem-bi-ra.", "start_ms": 3590, "end_ms": 4350}
+      ],
+      "hotspots": [
+        {
+          "name": "Wortel Manis Jono",
+          "x_percent": 47.0,
+          "y_percent": 54.0,
+          "radius": 38.0,
+          "sfx_path": "assets/audio/sfx/carrot_crunch.wav"
+        },
+        {
+          "name": "Pisang Sisil",
+          "x_percent": 56.5,
+          "y_percent": 62.0,
+          "radius": 40.0,
+          "sfx_path": "assets/audio/sfx/banana_peel.wav"
+        },
+        {
+          "name": "Sorak Bersama",
+          "x_percent": 50.0,
+          "y_percent": 50.0,
+          "radius": 52.0,
+          "sfx_path": "assets/audio/sfx/cheer_kids.wav"
+        }
+      ]
+    }
+  ]
+}
