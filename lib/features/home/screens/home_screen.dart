@@ -7,7 +7,7 @@ import '../../../shared/widgets/bouncy_card.dart';
 import '../../../shared/widgets/top_kiosk_bar.dart';
 import '../../animals/screens/animals_screen.dart';
 import '../../fruits/screens/fruits_screen.dart';
-import '../../interactive_cartoon/screens/interactive_cartoon_screen.dart';
+import '../../interactive_cartoon/screens/interactive_cartoon_list_screen.dart';
 import '../../numbers/screens/numbers_screen.dart';
 import '../../reading/screens/reading_screen.dart';
 import '../../vehicles/screens/vehicles_screen.dart';
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return NumbersScreen(
             key: const ValueKey('numbers'), onBack: () => _switchView('home'));
       case 'video':
-        return InteractiveCartoonScreen(
+        return InteractiveCartoonListScreen(
             key: const ValueKey('video'), onBack: () => _switchView('home'));
       case 'mimic':
         return VoiceMimicScreen(
@@ -216,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   _buildDashboardCard(
                     title: 'Kartun Interaktif',
-                    subtitle: 'Sentuh & Bereaksi',
+                    subtitle: 'Mobil & Akuarium Ajaib',
                     emoji: '🎬',
                     borderColor: AppColors.softPink,
                     gradient: AppColors.cardRoseGradient,
