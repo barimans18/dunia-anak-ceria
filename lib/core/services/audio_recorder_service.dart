@@ -123,7 +123,7 @@ class AudioRecorderService {
           ),
           iOS: AudioContextIOS(
             category: AVAudioSessionCategory.playback,
-            options: {AVAudioSessionOptions.defaultToSpeaker},
+            options: const {},
           ),
         ),
       );
@@ -215,6 +215,39 @@ class AudioRecorderService {
     await File(targetPath).writeAsBytes(data);
     _variantCache[variantId] = targetPath;
     return targetPath;
+  }
+
+  /// Menetapkan file rekaman aktif (misal dari rekaman yang tersimpan)
+  void setActiveRecordingPath(String filePath) {
+    _lastRecordedPath = filePath;
+    _variantCache.clear();
+  }
+
+  /// Menghapus file sementara di cache jika user tidak menyimpannya
+  Future<void> clearTemporaryFiles() async {
+    try {
+      await stopPlayback();
+      for (final path in _variantCache.values) {
+        final file = File(path);
+        if (file.existsSync()) {
+          await file.delete();
+        }
+      }
+      _variantCache.clear();
+
+      if (_lastRecordedPath != null) {
+        // Jangan hapus jika file berada di folder simpanan permanen
+        if (!_lastRecordedPath!.contains('saved_voices')) {
+          final tempFile = File(_lastRecordedPath!);
+          if (tempFile.existsSync()) {
+            await tempFile.delete();
+          }
+        }
+        _lastRecordedPath = null;
+      }
+    } catch (e) {
+      debugPrint("Error clearing temporary files: $e");
+    }
   }
 
   void dispose() {
