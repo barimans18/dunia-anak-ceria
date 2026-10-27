@@ -94,6 +94,8 @@ class SoundEngine {
   Future<void> playClick() => playAsset('audio/sfx/click.wav');
   Future<void> playPop() => playAsset('audio/sfx/pop.wav');
   Future<void> playWinStar() => playAsset('audio/sfx/win_star.wav');
+  Future<void> playRain() => playAsset('audio/sfx/rain.wav');
+  Future<void> playFireworks() => playAsset('audio/sfx/fireworks.wav');
 
   /// Bicara kata biasa dengan aksen Indonesia
   Future<void> speakWord(String text, {double rate = 0.38}) async {

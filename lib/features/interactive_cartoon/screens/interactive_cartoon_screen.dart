@@ -144,8 +144,12 @@ class _InteractiveCartoonScreenState extends State<InteractiveCartoonScreen>
 
   void _triggerRain() {
     setState(() => isRaining = !isRaining);
-    SoundEngine().playPop();
-    if (isRaining) SoundEngine().speakWord('Hujan turun, tik tik tik!');
+    if (isRaining) {
+      SoundEngine().playRain();
+      SoundEngine().speakWord('Hujan turun, tik tik tik!');
+    } else {
+      SoundEngine().playPop();
+    }
   }
 
   void _boostCar() {
@@ -157,7 +161,7 @@ class _InteractiveCartoonScreenState extends State<InteractiveCartoonScreen>
   }
 
   void _spawnFireworks() {
-    SoundEngine().playWinStar();
+    SoundEngine().playFireworks();
     SoundEngine().speakWord('Wah, kembang api meriah!');
     setState(() {
       final colors = [
