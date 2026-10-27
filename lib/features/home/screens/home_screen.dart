@@ -12,6 +12,7 @@ import '../../numbers/screens/numbers_screen.dart';
 import '../../reading/screens/reading_screen.dart';
 import '../../vehicles/screens/vehicles_screen.dart';
 import '../../voice_mimic/screens/voice_mimic_screen.dart';
+import '../../story/screens/story_list_screen.dart';
 import '../widgets/user_profile_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -93,6 +94,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return InteractiveCartoonScreen(key: const ValueKey('video'), onBack: () => _switchView('home'));
       case 'mimic':
         return VoiceMimicScreen(key: const ValueKey('mimic'), onBack: () => _switchView('home'));
+      case 'stories':
+        return StoryListScreen(key: const ValueKey('stories'), onBack: () => _switchView('home'));
       case 'learn_hub':
         return _buildLearnHub();
       case 'home':
@@ -283,6 +286,74 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontSize: 11,
                         fontWeight: FontWeight.w900,
                         color: Color(0xFF78350F),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 12),
+
+          // Banner Buku Cerita Interaktif
+          BouncyCard(
+            onTap: () => _switchView('stories'),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFFFEF3C7), Color(0xFFFDE68A)],
+                ),
+                borderRadius: BorderRadius.circular(22),
+                border: Border.all(color: const Color(0xFFF59E0B), width: 2),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.amber.withOpacity(0.2),
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  const Text('📚', style: TextStyle(fontSize: 32)),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          'Buku Cerita Interaktif',
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w900,
+                            color: AppColors.textDark,
+                          ),
+                        ),
+                        Text(
+                          'Pisang Manis untuk Dudung 🍌 (Karaoke & Sentuh)',
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFFB45309),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF59E0B),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    child: const Text(
+                      'Baca 📖',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white,
                       ),
                     ),
                   ),

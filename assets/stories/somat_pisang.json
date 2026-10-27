@@ -1,0 +1,155 @@
+{
+  "id": "somat_pisang_01",
+  "title": "Pisang Manis untuk Dudung",
+  "theme": "Keluarga Somat",
+  "cover_image": "assets/images/stories/somat_pisang/page_5.webp",
+  "pages": [
+    {
+      "page_number": 1,
+      "image_path": "assets/images/stories/somat_pisang/page_1.webp",
+      "audio_path": "assets/audio/stories/somat_pisang/page_1.mp3",
+      "full_text": "Matahari pagi bersinar cerah. Pak Somat tersenyum gembira di depan rumah.",
+      "syllables": [
+        {"text": "Pa-gi", "start_ms": 0, "end_ms": 600},
+        {"text": "ce-rah,", "start_ms": 650, "end_ms": 1200},
+        {"text": "Pak", "start_ms": 1300, "end_ms": 1700},
+        {"text": "So-mat", "start_ms": 1750, "end_ms": 2300},
+        {"text": "se-nyum", "start_ms": 2400, "end_ms": 2900},
+        {"text": "gem-bi-ra.", "start_ms": 3000, "end_ms": 3800}
+      ],
+      "hotspots": [
+        {
+          "name": "Kumis Pak Somat",
+          "x_percent": 64.0,
+          "y_percent": 36.5,
+          "radius": 36.0,
+          "sfx_path": "assets/audio/sfx/laugh.wav"
+        },
+        {
+          "name": "Penyiram Bunga",
+          "x_percent": 54.0,
+          "y_percent": 66.0,
+          "radius": 34.0,
+          "sfx_path": "assets/audio/sfx/splash.wav"
+        }
+      ]
+    },
+    {
+      "page_number": 2,
+      "image_path": "assets/images/stories/somat_pisang/page_2.webp",
+      "audio_path": "assets/audio/stories/somat_pisang/page_2.mp3",
+      "full_text": "Bu Inah pulang membawa buah pisang. Warnanya kuning dan harum sekali.",
+      "syllables": [
+        {"text": "Bu", "start_ms": 0, "end_ms": 400},
+        {"text": "I-nah", "start_ms": 450, "end_ms": 1000},
+        {"text": "ba-wa", "start_ms": 1050, "end_ms": 1500},
+        {"text": "pi-sang", "start_ms": 1550, "end_ms": 2100},
+        {"text": "ku-ning", "start_ms": 2200, "end_ms": 2700},
+        {"text": "ma-nis.", "start_ms": 2800, "end_ms": 3500}
+      ],
+      "hotspots": [
+        {
+          "name": "Pisang Kuning",
+          "x_percent": 60.0,
+          "y_percent": 75.0,
+          "radius": 46.0,
+          "sfx_path": "assets/audio/sfx/pop.wav"
+        },
+        {
+          "name": "Bu Inah Ceria",
+          "x_percent": 66.0,
+          "y_percent": 32.0,
+          "radius": 38.0,
+          "sfx_path": "assets/audio/sfx/laugh.wav"
+        }
+      ]
+    },
+    {
+      "page_number": 3,
+      "image_path": "assets/images/stories/somat_pisang/page_3.webp",
+      "audio_path": "assets/audio/stories/somat_pisang/page_3.mp3",
+      "full_text": "Dudung dan Ninung melompat senang. Mereka suka makan buah bersama.",
+      "syllables": [
+        {"text": "Du-dung", "start_ms": 0, "end_ms": 600},
+        {"text": "dan", "start_ms": 650, "end_ms": 900},
+        {"text": "Ni-nung", "start_ms": 950, "end_ms": 1500},
+        {"text": "lo-mpat", "start_ms": 1600, "end_ms": 2100},
+        {"text": "se-nang.", "start_ms": 2200, "end_ms": 2900}
+      ],
+      "hotspots": [
+        {
+          "name": "Dudung Melompat",
+          "x_percent": 47.0,
+          "y_percent": 48.0,
+          "radius": 45.0,
+          "sfx_path": "assets/audio/sfx/pop.wav"
+        },
+        {
+          "name": "Ninung Tertawa",
+          "x_percent": 66.0,
+          "y_percent": 54.0,
+          "radius": 42.0,
+          "sfx_path": "assets/audio/sfx/cheer.wav"
+        }
+      ]
+    },
+    {
+      "page_number": 4,
+      "image_path": "assets/images/stories/somat_pisang/page_4.webp",
+      "audio_path": "assets/audio/stories/somat_pisang/page_4.mp3",
+      "full_text": "Cuci tangan dulu ya Sayang, kata Bu Inah lembut sambil tersenyum.",
+      "syllables": [
+        {"text": "Cu-ci", "start_ms": 0, "end_ms": 500},
+        {"text": "ta-ngan", "start_ms": 550, "end_ms": 1100},
+        {"text": "du-lu,", "start_ms": 1150, "end_ms": 1600},
+        {"text": "a-nak", "start_ms": 1700, "end_ms": 2200},
+        {"text": "pin-tar.", "start_ms": 2300, "end_ms": 3000}
+      ],
+      "hotspots": [
+        {
+          "name": "Keran Air",
+          "x_percent": 42.0,
+          "y_percent": 66.0,
+          "radius": 40.0,
+          "sfx_path": "assets/audio/sfx/splash.wav"
+        },
+        {
+          "name": "Pak Somat",
+          "x_percent": 80.0,
+          "y_percent": 42.0,
+          "radius": 40.0,
+          "sfx_path": "assets/audio/sfx/laugh.wav"
+        }
+      ]
+    },
+    {
+      "page_number": 5,
+      "image_path": "assets/images/stories/somat_pisang/page_5.webp",
+      "audio_path": "assets/audio/stories/somat_pisang/page_5.mp3",
+      "full_text": "Hore! Buah pisang terasa manis. Keluarga Somat selalu ceria dan rukun.",
+      "syllables": [
+        {"text": "Ho-re!", "start_ms": 0, "end_ms": 700},
+        {"text": "Pi-sang", "start_ms": 800, "end_ms": 1400},
+        {"text": "ma-nis,", "start_ms": 1500, "end_ms": 2000},
+        {"text": "ke-lu-ar-ga", "start_ms": 2100, "end_ms": 2800},
+        {"text": "ba-ha-gi-a.", "start_ms": 2900, "end_ms": 3700}
+      ],
+      "hotspots": [
+        {
+          "name": "Pak Somat Makan Pisang",
+          "x_percent": 68.0,
+          "y_percent": 54.0,
+          "radius": 48.0,
+          "sfx_path": "assets/audio/sfx/cheer.wav"
+        },
+        {
+          "name": "Keranjang Pisang",
+          "x_percent": 43.5,
+          "y_percent": 85.0,
+          "radius": 40.0,
+          "sfx_path": "assets/audio/sfx/pop.wav"
+        }
+      ]
+    }
+  ]
+}

@@ -57,3 +57,7 @@ flutter:
     - assets/images/animals/
     - assets/images/vehicles/
     - assets/images/fruits/
+    - assets/stories/
+    - assets/images/stories/
+    - assets/images/stories/somat_pisang/
+    - assets/audio/stories/somat_pisang/
